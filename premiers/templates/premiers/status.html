@@ -1,0 +1,17 @@
+{% extends "premiers/base.html" %}
+{% block content %}
+<div class="event-container">
+        <div class="event">
+            <div class="event-right">
+                <h3 class="object-title">{{object.title}}</h3>
+                <div class="object-description">{{object.vip_name}}</div>
+                <div class="object-description">{{object.description}}</div>
+                <div class="object-description">{{object.date}}</div>
+                <div class="object-description">{{object.start_time}}</div>
+                <div class="object-description">{{object.end_time}}</div>
+            </div>
+        </div>
+
+</div>
+
+{% endblock content %}

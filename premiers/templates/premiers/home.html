@@ -1,0 +1,16 @@
+{% extends "premiers/base.html" %}
+{% block content %}
+<div style="max-width: 500px; position:fixed; left:40%; top:50%;">
+    <a href="{% url 'premiers-status' %}">
+        <button type="button" class="btn btn-primary btn-lg btn-block"
+                style=" margin-bottom: 10px; border-radius: 15px !important">Check Your Slot
+        </button>
+    </a>
+
+    <a href="{% url 'ezz-vip' %}">
+        <button type="button" class="btn btn-primary btn-lg btn-block"
+                style=" margin-bottom: 10px; border-radius: 15px !important">Book Another Slot
+        </button>
+    </a>
+</div>
+{% endblock content %}

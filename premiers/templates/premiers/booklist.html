@@ -1,0 +1,28 @@
+{% extends "premiers/base.html" %}
+{% block content %}
+<div style="max-width: 500px; position:fixed; left:40%; top:50%;">
+    <a href="{% url 'ezz-vip' %}">
+        <button type="button" class="btn btn-primary btn-lg btn-block"
+                style=" margin-bottom: 10px; border-radius: 15px !important">VIP Detail
+        </button>
+    </a>
+
+    <a href="{% url 'ezz-purpose' %}">
+        <button type="button" class="btn btn-primary btn-lg btn-block"
+                style=" margin-bottom: 10px; border-radius: 15px !important">Meeting Detail
+        </button>
+    </a>
+
+    <a href="{% url 'ezz-select' %}">
+        <button type="button" class="btn btn-primary btn-lg btn-block"
+                style=" margin-bottom: 10px; border-radius: 15px !important">Select Slot
+        </button>
+    </a>
+
+    <a href="{% url 'ezz-confirm' %}">
+        <button type="button" class="btn btn-primary btn-lg btn-block"
+                style=" margin-bottom: 10px; border-radius: 15px !important">Confirm Slot
+        </button>
+    </a>
+</div>
+{% endblock content %}

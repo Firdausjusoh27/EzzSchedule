@@ -1,0 +1,30 @@
+{% extends "premiers/base.html" %}
+{% block content %}
+<div class="event-container">
+    <div class="event">
+        <div class="container">
+            <h1 class="text-center"> Welcome to Xera Scheduling </h1>
+            <h5 class="text-center">Which of the following is the nature of your business. Please select ONE.</h5>
+            <hr>
+            <div class="row mt-3">
+                {% for main in mains %}
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <div style=" text-align: center; display: block;">
+                            <img src="{{main.image.url}}" alt="" class="img-fluid" style="width: 150px; height:180px;">
+                        </div>
+<!--                        <ls>{{main.subpurpose_set.all}}</ls>-->
+
+                        <a href="{% url 'ezz-subpurpose' main.id %}" class="btn btn-primary">{{main.main_item}}</a>
+                    </div>
+                    <br>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock content %}
+

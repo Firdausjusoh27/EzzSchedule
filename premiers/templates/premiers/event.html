@@ -1,0 +1,26 @@
+{% extends "premiers/base.html" %}
+{% block content %}
+<div class="event-container">
+    <h3 class="year">2020</h3>
+    {% for event in events %}
+        <div class="event">
+            <div class="event-left">
+                <div class="event-date">
+                    <div class="date">{{event.date | date:"d" }}</div>
+                    <div class="month">{{event.date | date:"M" }}</div>
+                </div>
+            </div>
+
+            <div class="event-right">
+                <h3 class="event-title">{{event.title}}</h3>
+
+                <div class="event-description">{{event.description}}</div>
+
+                <div class="event-timing">
+                    <img src="images/time.png" alt=""/>{{event.time}}</div>
+            </div>
+        </div>
+    {% endfor %}
+
+</div>
+{% endblock content %}
