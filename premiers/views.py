@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Event, Appointment, MainPurpose, SubPurpose, Vip
 from django.http import JsonResponse
-from .forms import VipForm
+from .forms import VipForm, PurposeForm
 from fuzzy.views import fuzzy
 from django.contrib.auth.decorators import login_required
 from django.views.generic import DetailView, TemplateView
@@ -44,6 +44,15 @@ def vip(request):
     }
 
     return render(request, 'meetings/vip.html', context)
+
+
+def sitem(request):
+    form = PurposeForm()
+
+    context = {
+        'form': form
+    }
+    return render(request, 'meetings/purposeitem.html', context)
 
 
 class purpose(TemplateView):
