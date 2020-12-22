@@ -8,6 +8,9 @@
             <hr>
             {{subs}}
             <h2>CATEGORY : {{category}}</h2>
+            <h2>{{request.user.email}}</h2>
+            <h2>{{request.user.vip}}</h2>
+            <h2>{{request.user.vip.email}}</h2>
             <br>
             <a style="width:100px" href="{% url 'ezz-select' %}" class="btn btn-primary">Next</a>
         </div>

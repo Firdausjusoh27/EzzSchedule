@@ -3,12 +3,20 @@
 {% load crispy_forms_tags %}
 <div class="event-container">
     <h3>{{title}}</h3>
-    <form action="" method="post">
-        {% csrf_token %}
-        {{form|crispy}}
-        <input type="Submit">
-    </form>
 
+    {% if vip_name != Null %}
+        <h2>{{vip_name}}</h2>
+        <h2>{{vip_email}}</h2>
+        <h2>{{vip_company}}</h2>
+        <a style="width:100px" href="{% url 'ezz-purpose' %}" class="btn btn-primary">Next</a>
+
+    {% else %}
+        <form action="" method="post">
+            {% csrf_token %}
+            {{form|crispy}}
+            <input type="Submit">
+        </form>
+    {% endif %}
 </div>
 
 

@@ -19,7 +19,7 @@ class SubPurposeAdmin(admin.ModelAdmin):
 
 
 class VipProfileAdmin(admin.ModelAdmin):
-    list_display = ('title', 'name', 'company')
+    list_display = ('user', 'title', 'name', 'company')
 
 
 class CompanyTypeAdmin(admin.ModelAdmin):

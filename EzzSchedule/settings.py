@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'slots.apps.SlotsConfig',
     'fuzzy.apps.FuzzyConfig',
     'crispy_forms',
+    'events'
 ]
 
 MIDDLEWARE = [

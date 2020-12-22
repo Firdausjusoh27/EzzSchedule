@@ -1,8 +1,10 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Event, Appointment, MainPurpose, SubPurpose, Vip
-from django.http import JsonResponse
+from django.contrib.auth.models import User
+from django.http import JsonResponse, Http404
 from .forms import VipForm, PurposeForm
 from fuzzy.views import fuzzy
+from datetime import date, timedelta
 from django.contrib.auth.decorators import login_required
 from django.views.generic import DetailView, TemplateView
 
@@ -30,20 +32,63 @@ def status(request):
     return render(request, 'premiers/status.html', context)
 
 
-def vip(request):
-    form = VipForm()
+# def vip(request):
+#
+#     # if request.user.vip is not None:
+#     #     user = request.user.vip
+#     #     print("Userrrrrrrrrrrrr", user)
+#     # if else to check Vip have register or not
+#     # if have just confirm back this VIP
+#     # can edit new VIP if have changes
+#
+#     form = VipForm()
+#
+#     if request.method == 'POST':
+#         form = VipForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#         return redirect('ezz-purpose')
+#     context = {
+#         'title': 'VIP DETAILS',
+#         'form': form,
+#     }
+#
+#     return render(request, 'meetings/vip.html', context)
 
-    if request.method == 'POST':
-        form = VipForm(request.POST)
-        if form.is_valid():
-            form.save()
-        return redirect('ezz-purpose')
-    context = {
-        'title': 'VIP DETAILS',
-        'form': form,
-    }
+
+def vip(request):
+
+    try:
+        if request.method == 'POST':
+            form = VipForm(request.POST)
+            if form.is_valid():
+                form.save()
+            return redirect('ezz-purpose')
+        else:
+            user = request.user.vip
+            vip_detail = Vip.objects.get(name=user)
+            vip_name = vip_detail.name
+            vip_email = vip_detail.email
+            vip_company = vip_detail.company
+            context = {
+                'vip_name': vip_name,
+                'vip_email': vip_email,
+                'vip_company': vip_company,
+            }
+
+    except Vip.DoesNotExist:
+        form = VipForm()
+        context = {
+            'title': 'VIP DETAILS',
+            'form': form,
+        }
 
     return render(request, 'meetings/vip.html', context)
+
+
+
+
+    # return render(request, 'meetings/vip.html', context)
 
 
 def sitem(request):
@@ -95,8 +140,29 @@ class recommend(TemplateView):
         fuzzy_result = round(fuzzy(main.main_weight, sub.sub_weight))
         print("Fuzzy : -------> ", fuzzy_result)
 
+        # if self.request.user.vip is not None:
+        #     user = self.request.user.vip
+        #     # vip_detail = Vip.objects.filter(name=user)
+        #     vip_detail2 = Vip.objects.get(name=user)
+        #     vip_name = user
+        #     vip_email = vip_detail2.email
+        #     vip_company = vip_detail2.company
+        #
+        #     print("Userrrrrrrrrrrrr", user)
+        #     print(vip_name)
+        #     print(vip_email)
+        #     print(vip_company)
+
         if fuzzy_result > 70:
             category = "GLORY"
+            sdate = date.today()
+            edate = date(2020, 12, 25)
+            delta = edate - sdate
+            for i in range(delta.days + 1):
+                print("Time Delta", timedelta(days=i))
+                day = sdate + timedelta(days=i)
+                print(day)
+
         elif fuzzy_result > 45 & fuzzy_result < 70:
             category = "MASTER"
         else:
@@ -152,7 +218,3 @@ class CategoryDetailView(TemplateView):
 
         context['subs'] = SubPurpose.objects.filter(main_purpose_id=main_id)
         return context
-
-
-
-
