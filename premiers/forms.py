@@ -6,6 +6,7 @@ class VipForm(ModelForm):
     class Meta:
         model = Vip
         fields = '__all__'
+        exclude = ('user',)
 
 
 class PurposeForm(ModelForm):

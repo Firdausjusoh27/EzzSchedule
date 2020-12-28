@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Event, Appointment, MainPurpose, SubPurpose, Vip, CompanyType, Title, Position, PurposeItem
+from .models import EventDummy, Appointment, MainPurpose, SubPurpose, Vip, CompanyType, Title, Position, PurposeItem
 
 
 class EventAdmin(admin.ModelAdmin):
@@ -38,7 +38,7 @@ class PurposeItemAdmin(admin.ModelAdmin):
     list_display = ('user', 'main_purpose', 'sub_purpose')
 
 
-admin.site.register(Event, EventAdmin)
+admin.site.register(EventDummy, EventAdmin)
 admin.site.register(Appointment, AppointmentAdmin)
 admin.site.register(MainPurpose, MainPurposeAdmin)
 admin.site.register(SubPurpose, SubPurposeAdmin)

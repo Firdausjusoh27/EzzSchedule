@@ -4,18 +4,35 @@
     <div class="event">
         <div class="container">
             <h1 class="text-center"> Xera Scheduling </h1>
-            <h5 class="text-center">Confirm Your Selection</h5>
+            <h5 class="text-center">Which of the following your preferred SLOT. Please select ONE.</h5>
             <hr>
-            {{subs}}
-            <h2>CATEGORY : {{category}}</h2>
-            <h2>{{request.user.email}}</h2>
-            <h2>{{request.user.vip}}</h2>
-            <h2>{{request.user.vip.email}}</h2>
+            <div>
+                {% for date in selected_date %}
+                    <div class="event">
+                        <div class="event-left">
+                            <div class="event-date">
+                                <ls>{{date}}</ls>
+                            </div>
+                        </div>
+
+                        <div class="event-right">
+                            <ls>Main Purpose: {{mains}}</ls>
+                            <ls>Sub Purpose: {{subs}}</ls>
+                            <ls>Vip: {{request.user.vip}}</ls>
+                            <ls>Email: {{request.user.email}}</ls>
+                            <ls>Category: {{category}}</ls>
+                        </div>
+
+                        <div style="margin-left: 100px; margin-top:5%">
+                            <a href="{% url 'ezz-confirm' date %}" type="submit" class="btn btn-primary" style="width:120px">
+                                Select </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
             <br>
-            <a style="width:100px" href="{% url 'ezz-select' %}" class="btn btn-primary">Next</a>
         </div>
     </div>
-
 </div>
 
 {% endblock content %}

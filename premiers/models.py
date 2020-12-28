@@ -5,7 +5,7 @@ from PIL import Image
 from django.conf import settings
 
 
-class Event(models.Model):
+class EventDummy(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(max_length=300)
     date = models.DateField(auto_now_add=False, auto_now=False, blank=True, null=True)

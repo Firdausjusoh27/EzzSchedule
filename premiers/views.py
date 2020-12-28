@@ -1,12 +1,15 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from .models import Event, Appointment, MainPurpose, SubPurpose, Vip
+from django.shortcuts import render, redirect
+from .models import EventDummy, Appointment, MainPurpose, SubPurpose, Vip
+from events.models import Event
 from django.contrib.auth.models import User
 from django.http import JsonResponse, Http404
 from .forms import VipForm, PurposeForm
 from fuzzy.views import fuzzy
-from datetime import date, timedelta
+from datetime import *
+import datetime
 from django.contrib.auth.decorators import login_required
 from django.views.generic import DetailView, TemplateView
+
 
 
 def home(request):
@@ -19,7 +22,7 @@ def booklist(request):
 
 def event(request):
     context = {
-        'events': Event.objects.all()
+        'events': EventDummy.objects.all()
     }
     return render(request, 'premiers/event.html', context)
 
@@ -62,7 +65,9 @@ def vip(request):
         if request.method == 'POST':
             form = VipForm(request.POST)
             if form.is_valid():
-                form.save()
+                vip_form = form.save(commit=False)
+                vip_form.user = request.user
+                vip_form.save()
             return redirect('ezz-purpose')
         else:
             user = request.user.vip
@@ -84,9 +89,6 @@ def vip(request):
         }
 
     return render(request, 'meetings/vip.html', context)
-
-
-
 
     # return render(request, 'meetings/vip.html', context)
 
@@ -132,47 +134,77 @@ class recommend(TemplateView):
         # filter product by id
         sub = SubPurpose.objects.get(id=sub_id)
         main = MainPurpose.objects.get(id=sub.main_purpose_id)
-
-        print(" SUB ID ------>", sub.id)
-        print(" SUB Weightage ----->", sub.sub_weight)
-        print(" MAIN ID ------>", main.id)
-        print("MAIN WEIGHTAGE", main.main_weight)
         fuzzy_result = round(fuzzy(main.main_weight, sub.sub_weight))
-        print("Fuzzy : -------> ", fuzzy_result)
-
-        # if self.request.user.vip is not None:
-        #     user = self.request.user.vip
-        #     # vip_detail = Vip.objects.filter(name=user)
-        #     vip_detail2 = Vip.objects.get(name=user)
-        #     vip_name = user
-        #     vip_email = vip_detail2.email
-        #     vip_company = vip_detail2.company
-        #
-        #     print("Userrrrrrrrrrrrr", user)
-        #     print(vip_name)
-        #     print(vip_email)
-        #     print(vip_company)
 
         if fuzzy_result > 70:
             category = "GLORY"
-            sdate = date.today()
-            edate = date(2020, 12, 25)
-            delta = edate - sdate
-            for i in range(delta.days + 1):
-                print("Time Delta", timedelta(days=i))
-                day = sdate + timedelta(days=i)
-                print(day)
+            time_range = 5
+            base = datetime.date.today()
+            date_list = [base + datetime.timedelta(days=x) for x in range(time_range)]
+            print("Date Listtttt", date_list)
+            free_date = []
+            selected_date = []
+
+            for x in date_list:
+                events = Event.objects.filter(day=x)
+                if events.exists():
+                    print("There is event on this date", x)
+                else:
+                    free_date.append(x)
+                    print("No Event", x)
+            print(free_date)
 
         elif fuzzy_result > 45 & fuzzy_result < 70:
             category = "MASTER"
+            time_range = 5
+            base = datetime.date.today()
+            next_week = base + datetime.timedelta(days=7)
+            date_list = [next_week + datetime.timedelta(days=x) for x in range(time_range)]
+            free_date = []
+            selected_date = []
+
+            for x in date_list:
+                events = Event.objects.filter(day=x)
+                if events.exists():
+                    print("There is event on this date", x)
+                else:
+                    free_date.append(x)
+                    print("No Event", x)
+            print(free_date)
+
         else:
             category = "ELITE"
 
+        for y in range(3):
+            selected_date.append(free_date[y])
         context = {
+            'mains': main,
             'subs': sub,
             'category': category,
+            'selected_date': selected_date,
         }
         return context
+
+    # Fuzzy Result
+    # print(" SUB ID ------>", sub.id)
+    # print(" SUB Weightage ----->", sub.sub_weight)
+    # print(" MAIN ID ------>", main.id)
+    # print("MAIN WEIGHTAGE", main.main_weight)
+
+    # print("Fuzzy : -------> ", fuzzy_result)
+
+    # if self.request.user.vip is not None:
+    #     user = self.request.user.vip
+    #     # vip_detail = Vip.objects.filter(name=user)
+    #     vip_detail2 = Vip.objects.get(name=user)
+    #     vip_name = user
+    #     vip_email = vip_detail2.email
+    #     vip_company = vip_detail2.company
+    #
+    #     print("Userrrrrrrrrrrrr", user)
+    #     print(vip_name)
+    #     print(vip_email)
+    #     print(vip_company)
 
 
 def testing(request):
@@ -182,7 +214,7 @@ def testing(request):
     #     'events': Event.objects.all()
     # }
     #
-    data = list(Event.objects.values())
+    data = list(EventDummy.objects.values())
 
     return JsonResponse(data, safe=False)
     # return render(request, 'premiers/testing.html')
