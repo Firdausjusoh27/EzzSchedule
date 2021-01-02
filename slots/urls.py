@@ -3,7 +3,9 @@ from . import views
 
 
 urlpatterns = [
-    path('confirm/<str:pro_id>', views.confirm.as_view(), name='ezz-confirm'),
+    path('confirm/', views.confirm, name='ezz-confirm'),
     path('select/', views.select, name='ezz-select'),
+    path('poll/', views.poll, name='poll'),
+    path('pulling/', views.pulling, name='pulling'),
 ]
 

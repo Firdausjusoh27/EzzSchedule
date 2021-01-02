@@ -15,6 +15,6 @@ urlpatterns = [
     path('category/', views.CategoryView.as_view(), name='ezz-category'),
     path('all-subs/', views.AllSubView.as_view(), name='allsubs'),
     path('subcategory/<int:pro_id>', views.CategoryDetailView.as_view(), name='subcategory'),
-    path('pitem/', views.sitem, name="sitem")
+    # path('pitem/', views.sitem, name="sitem")
 
 ]

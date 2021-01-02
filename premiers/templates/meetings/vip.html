@@ -2,8 +2,6 @@
 {% block content %}
 {% load crispy_forms_tags %}
 <div class="event-container">
-    <h3>{{title}}</h3>
-
     {% if vip_name != Null %}
         <h2>{{vip_name}}</h2>
         <h2>{{vip_email}}</h2>
@@ -11,6 +9,7 @@
         <a style="width:100px" href="{% url 'ezz-purpose' %}" class="btn btn-primary">Next</a>
 
     {% else %}
+        <h3>Enter the detail of the person attending the meeting</h3>
         <form action="" method="post">
             {% csrf_token %}
             {{form|crispy}}

@@ -3,11 +3,22 @@ from django.db import models
 from django.core.exceptions import ValidationError
 from django.urls import reverse
 from django.contrib.auth.models import User
+from premiers.models import PurposeDetail
 
 
-# Create your models here.
+class Slot(models.Model):
+    name = models.CharField(help_text=u'Morning or Evening', max_length=200, null=True)
+    start_time = models.TimeField(u'Starting time', help_text=u'Starting time')
+    end_time = models.TimeField(u'Final time', help_text=u'Final time')
+
+    class Meta:
+        verbose_name = u'Slot'
+        verbose_name_plural = u'Slot'
+
+
 class Event(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    purposeitem = models.ForeignKey(PurposeDetail, on_delete=models.CASCADE, null=True)
     day = models.DateField(u'Day of the event', help_text=u'Day of the event')
     start_time = models.TimeField(u'Starting time', help_text=u'Starting time')
     end_time = models.TimeField(u'Final time', help_text=u'Final time')
@@ -44,3 +55,4 @@ class Event(models.Model):
                     raise ValidationError(
                         'There is an overlap with another event: ' + str(event.day) + ', ' + str(
                             event.start_time) + '-' + str(event.end_time))
+

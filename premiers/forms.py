@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Vip, PurposeItem
+from .models import Vip
 
 
 class VipForm(ModelForm):
@@ -8,8 +8,3 @@ class VipForm(ModelForm):
         fields = '__all__'
         exclude = ('user',)
 
-
-class PurposeForm(ModelForm):
-    class Meta:
-        model = PurposeItem
-        fields = '__all__'

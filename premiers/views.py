@@ -1,15 +1,14 @@
 from django.shortcuts import render, redirect
-from .models import EventDummy, Appointment, MainPurpose, SubPurpose, Vip
-from events.models import Event
+from .models import EventDummy, Appointment, MainPurpose, SubPurpose, Vip, PurposeDetail
+from events.models import Event, Slot
 from django.contrib.auth.models import User
 from django.http import JsonResponse, Http404
-from .forms import VipForm, PurposeForm
+from .forms import VipForm
 from fuzzy.views import fuzzy
 from datetime import *
 import datetime
 from django.contrib.auth.decorators import login_required
 from django.views.generic import DetailView, TemplateView
-
 
 
 def home(request):
@@ -60,7 +59,6 @@ def status(request):
 
 
 def vip(request):
-
     try:
         if request.method == 'POST':
             form = VipForm(request.POST)
@@ -93,13 +91,13 @@ def vip(request):
     # return render(request, 'meetings/vip.html', context)
 
 
-def sitem(request):
-    form = PurposeForm()
-
-    context = {
-        'form': form
-    }
-    return render(request, 'meetings/purposeitem.html', context)
+# def sitem(request):
+#     form = PurposeForm()
+#
+#     context = {
+#         'form': form
+#     }
+#     return render(request, 'meetings/purposeitem.html', context)
 
 
 class purpose(TemplateView):
@@ -134,7 +132,15 @@ class recommend(TemplateView):
         # filter product by id
         sub = SubPurpose.objects.get(id=sub_id)
         main = MainPurpose.objects.get(id=sub.main_purpose_id)
+
+        purpose_detail = PurposeDetail(user=self.request.user, vip=self.request.user.vip, main_purpose=main,
+                                       sub_purpose=sub)
+        # purpose_detail.save()
+        newid = PurposeDetail.objects.last().id
+        purposeDetail = PurposeDetail.objects.get(id=newid)
+        print("NEW ID", newid)
         fuzzy_result = round(fuzzy(main.main_weight, sub.sub_weight))
+        selected_slot = Slot.objects.all()
 
         if fuzzy_result > 70:
             category = "GLORY"
@@ -170,18 +176,21 @@ class recommend(TemplateView):
                 else:
                     free_date.append(x)
                     print("No Event", x)
-            print(free_date)
 
         else:
             category = "ELITE"
 
         for y in range(3):
             selected_date.append(free_date[y])
+
+        print("selected date --------------->", selected_date)
         context = {
             'mains': main,
             'subs': sub,
             'category': category,
             'selected_date': selected_date,
+            'purposeDetail': purposeDetail,
+            'selected_slot': selected_slot,
         }
         return context
 

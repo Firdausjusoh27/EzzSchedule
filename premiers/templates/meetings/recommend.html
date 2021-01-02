@@ -3,34 +3,89 @@
 <div class="event-container">
     <div class="event">
         <div class="container">
-            <h1 class="text-center"> Xera Scheduling </h1>
-            <h5 class="text-center">Which of the following your preferred SLOT. Please select ONE.</h5>
-            <hr>
-            <div>
-                {% for date in selected_date %}
-                    <div class="event">
-                        <div class="event-left">
-                            <div class="event-date">
-                                <ls>{{date}}</ls>
+            <!--            <div>-->
+            <!--                <h5>{{purposeDetail.vip}}</h5>-->
+            <!--                <h5>{{purposeDetail.vip.email}}</h5>-->
+            <!--                <h5>{{purposeDetail.main_purpose}}</h5>-->
+            <!--                <h5>{{purposeDetail.sub_purpose}}</h5>-->
+            <!--                <h5>{{category}}</h5>-->
+            <!--            </div>-->
+
+            <!--            <hr>-->
+
+            <form action="{% url 'ezz-confirm'%}" method="POST">
+                {% csrf_token %}
+                <div class="card card-block d-flex" style="height: 170px">
+                    <div class="card-body align-items-center d-flex justify-content-center">
+                        <input type="hidden" name="meetingId" value="{{purposeDetail.id}}">Meeting ID :
+                        {{purposeDetail.id}}</input>
+                    </div>
+                    <div class="card-body align-items-center d-flex justify-content-center">
+                        <h6>Attending : {{purposeDetail.vip}}</h6>
+                    </div>
+                    <div class="card-body align-items-center d-flex justify-content-center">
+                        <h6>Main Purpose : {{purposeDetail.main_purpose}}</h6>
+                    </div>
+                    <div class="card-body align-items-center d-flex justify-content-center">
+                        <h6>Sub Purpose : {{purposeDetail.sub_purpose}}</h6>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    {% for date in selected_date %}
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm my-auto">
+                            <div class="card card-block d-flex align-items-center" style="height: 200px">
+                                <div class="card-body align-items-center justify-content-center">
+                                    <h5 style="font-size:20px;" type="hidden" name="selectedDate" value="{{date}}">{{date|date:"d M, Y" }}</h5>
+                                </div>
+
+                                <div class="card-body align-items-center justify-content-center">
+                                    {% for slot in selected_slot %}
+                                    <input type="radio" name="slot" value="{{slot.id}}">
+                                    <label>{{slot.name}} {{slot.start_time}} - {{slot.end_time}}</label>
+                                    <br>
+                                    {% empty %}
+                                    <p>There is no choice available for this question</p>
+                                    {% endfor %}
+                                </div>
+                                <br>
+
+
+                            </div>
+                            <div class="card-footer text-center">
+                                <button type="submit" class="btn btn-primary btn-sm center" style="color:white" name="submit" value="{{date}}">
+                                    Select
+                                </button>
                             </div>
                         </div>
 
-                        <div class="event-right">
-                            <ls>Main Purpose: {{mains}}</ls>
-                            <ls>Sub Purpose: {{subs}}</ls>
-                            <ls>Vip: {{request.user.vip}}</ls>
-                            <ls>Email: {{request.user.email}}</ls>
-                            <ls>Category: {{category}}</ls>
-                        </div>
-
-                        <div style="margin-left: 100px; margin-top:5%">
-                            <a href="{% url 'ezz-confirm' date %}" type="submit" class="btn btn-primary" style="width:120px">
-                                Select </a>
-                        </div>
+                        <br>
                     </div>
-                {% endfor %}
-            </div>
-            <br>
+                    {% endfor %}
+                </div>
+            </form>
+
+
+            <!--            <h1>My First JavaScript</h1>-->
+
+            <!--            <p>JavaScript can change the content of an HTML element:</p>-->
+
+            <!--            <button type="button" onclick="myFunction()">Click Me!</button>-->
+
+            <!--            <p id="demo">This is a demonstration.</p>-->
+
+            <!--            <script>-->
+            <!--                function myFunction() {-->
+            <!--                  document.getElementById("demo").innerHTML = "Hello JavaScript!";-->
+            <!--                }-->
+
+            <!--            </script>-->
+
+
+            <!--            <a href="#" style="color: black; background-color:#f1f1f1; ">&laquo; Previous</a>-->
+            <!--            <a href="#" style="color: black; background-color:#f1f1f1;" >Next &raquo;</a>-->
+
+
         </div>
     </div>
 </div>

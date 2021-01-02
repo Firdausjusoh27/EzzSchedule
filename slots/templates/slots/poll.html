@@ -1,0 +1,20 @@
+{% extends "premiers/base.html" %}
+{% block content %}
+
+<h3>{{data}}</h3>
+
+    <form method="POST" action="{% url 'pulling' %}">
+        {% csrf_token %}
+        {% for date in date_list %}
+        <label>{{date}}</label>
+        <input type="radio" name="answer" value="{{date}}">
+        <br>
+        {% empty %}
+        <p>There is no choice available for this question</p>
+        {% endfor %}
+        <input type="hidden" name="answer2" value="8">Testing</input>
+        <button type="submit" value="vote">Vote</button>
+    </form>
+
+
+{% endblock content %}

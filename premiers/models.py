@@ -84,7 +84,8 @@ class Vip(models.Model):
         return self.name
 
 
-class PurposeItem(models.Model):
-    user = models.OneToOneField(User, null=True, on_delete=models.CASCADE)
-    main_purpose = models.ForeignKey(MainPurpose, on_delete=models.SET_NULL, blank=True, null=True)
-    sub_purpose = models.ForeignKey(SubPurpose, on_delete=models.SET_NULL, blank=True, null=True)
+class PurposeDetail(models.Model):
+    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE, default='')
+    vip = models.ForeignKey(Vip, on_delete=models.CASCADE, blank=True, null=True)
+    main_purpose = models.ForeignKey(MainPurpose, on_delete=models.CASCADE, blank=True, null=True)
+    sub_purpose = models.ForeignKey(SubPurpose, on_delete=models.CASCADE, blank=True, null=True)

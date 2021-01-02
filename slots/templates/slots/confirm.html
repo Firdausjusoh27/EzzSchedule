@@ -4,32 +4,40 @@
 
 <div class="event-container">
     <div class="event">
-        <div class="container">
+        <div class="container" style="height: 500px">
             <h2 class="text-center">Xera Scheduling </h2>
             <h5 class="text-center">Please CONFIRM your selection. Thank you</h5>
             <hr>
-            <div>
-                <div class="event">
-                    <div class="event-left">
-                        <div class="event-date">
-                            <ls>{{selected_date}}</ls>
-                        </div>
+            <form action="{% url 'ezz-confirm'%}" method="POST">
+                {% csrf_token %}
+                <div class="card card-block d-flex"
+                     style="height: 350px; width:75%;  margin: 0 auto; float: none; margin-bottom: 10px;">
+                    <div class="card-body align-items-center d-flex justify-content-center">
+                        <input type="hidden" name="meetingId" value="{{purposeDetail.id}}">Meeting ID :
+                        {{purposeDetail.id}}</input>
+                    </div>
+                    <div class="card-body align-items-center d-flex justify-content-center">
+                        <h6>Attending : {{purposeDetail.vip}}</h6>
+                    </div>
+                    <div class="card-body align-items-center d-flex justify-content-center">
+                        <h6>Main Purpose : {{purposeDetail.main_purpose}}</h6>
+                    </div>
+                    <div class="card-body align-items-center d-flex justify-content-center">
+                        <h6>Sub Purpose : {{purposeDetail.sub_purpose}}</h6>
                     </div>
 
-                    <div class="event-right">
-                        <ls>Main Purpose: Fundraising</ls>
-                        <ls>Sub Purpose:</ls>
-                        <ls>Vip: Mohamad Firdaus Bin Jusoh</ls>
-                        <ls>Category: Glory</ls>
+                    <div class="card-footer text-center">
+                        <button type="submit" class="btn btn-primary btn-sm center" style="color:white" name="submit"
+                                value="{{date}}">
+                            Select
+                        </button>
                     </div>
 
-                    <div style="margin-left: 200px; margin-top:3%">
-                        <a href="#" class="btn btn-primary" style="width:120px"> Confirm </a>
-                    </div>
 
                 </div>
 
-            </div>
+
+            </form>
         </div>
     </div>
 
