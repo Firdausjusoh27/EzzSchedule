@@ -1,0 +1,20 @@
+{% extends "premiers/base.html" %}
+{% block content %}
+{% load crispy_forms_tags %}
+<div class="event-container">
+    <div class="event">
+        <div class="container" style="margin: 30px">
+            <h3>Update the detail of the new person attending the meeting</h3>
+            <form action="" method="post">
+                {% csrf_token %}
+                {{form|crispy}}
+                <input type="Submit">
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock content %}

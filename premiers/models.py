@@ -32,6 +32,7 @@ class MainPurpose(models.Model):
     main_item = models.CharField(max_length=200, null=True)
     main_weight = models.FloatField(null=True)
     image = models.ImageField(default='default.jpg', upload_to='MainPurpose_pics')
+    description = models.TextField(max_length=1000, blank=True, null=True)
 
     def __str__(self):
         return self.main_item
@@ -42,6 +43,7 @@ class SubPurpose(models.Model):
     sub_item = models.CharField(max_length=200, null=True)
     sub_weight = models.FloatField(null=True)
     image = models.ImageField(default='default.jpg', upload_to='SubPurpose_pics')
+    description = models.TextField(max_length=1000, blank=True, null=True)
 
     def __str__(self):
         return self.sub_item

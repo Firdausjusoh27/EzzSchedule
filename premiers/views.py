@@ -27,9 +27,11 @@ def event(request):
 
 
 def status(request):
-    obj = Appointment.objects.get(id=1)
+    logged_in_user = request.user
+    logged_in_user_slots = Event.objects.filter(user=logged_in_user)
+
     context = {
-        'object': obj
+        'slots': logged_in_user_slots,
     }
     return render(request, 'premiers/status.html', context)
 
@@ -70,13 +72,8 @@ def vip(request):
         else:
             user = request.user.vip
             vip_detail = Vip.objects.get(name=user)
-            vip_name = vip_detail.name
-            vip_email = vip_detail.email
-            vip_company = vip_detail.company
             context = {
-                'vip_name': vip_name,
-                'vip_email': vip_email,
-                'vip_company': vip_company,
+                'vip': vip_detail,
             }
 
     except Vip.DoesNotExist:
@@ -88,7 +85,21 @@ def vip(request):
 
     return render(request, 'meetings/vip.html', context)
 
-    # return render(request, 'meetings/vip.html', context)
+
+def updateVip(request, pk):
+    vip = Vip.objects.get(id=pk)
+    form = VipForm(instance=vip)
+
+    if request.method == 'POST':
+        form = VipForm(request.POST, instance=vip)
+        if form.is_valid():
+            form.save()
+            return redirect('ezz-purpose')
+
+    context = {
+        'form': form,
+    }
+    return render(request, 'meetings/vipupdate.html', context)
 
 
 # def sitem(request):
@@ -98,6 +109,21 @@ def vip(request):
 #         'form': form
 #     }
 #     return render(request, 'meetings/purposeitem.html', context)
+
+class purposedetail(TemplateView):
+    template_name = "meetings/purposedetail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # get id from request url
+        main_id = self.kwargs['pro_id']
+        detail = MainPurpose.objects.get(id=main_id)
+        subdetail = SubPurpose.objects.filter(main_purpose_id=main_id)
+        print("------------------->", detail)
+        print("------------------>", detail.description)
+
+        context['main_detail'] = detail
+        return context
 
 
 class purpose(TemplateView):

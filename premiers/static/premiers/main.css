@@ -17,6 +17,17 @@ ul {
   background-color: #000000;
 }
 
+.bg-modal{
+ width: 100%;
+ height:100%;
+ background-color: rgba(0,0,0,0.5); /* make it half transparent */
+ position: absolute;
+ top:0px;
+ z-index: 1;
+ display: none;  /* It will remain invisible until you open */
+ justify-content: center; /*center horizontally*/
+ align-items: center ; /* center vertically */}
+
 .site-header .navbar-nav .nav-link {
   color: #cbd5db;
 }

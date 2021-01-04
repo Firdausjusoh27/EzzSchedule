@@ -4,40 +4,33 @@
 
 <div class="event-container">
     <div class="event">
-        <div class="container" style="height: 500px">
-            <h2 class="text-center">Xera Scheduling </h2>
+        <div class="container" style="margin: 30px">
             <h5 class="text-center">Please CONFIRM your selection. Thank you</h5>
             <hr>
-            <form action="{% url 'ezz-confirm'%}" method="POST">
-                {% csrf_token %}
                 <div class="card card-block d-flex"
-                     style="height: 350px; width:75%;  margin: 0 auto; float: none; margin-bottom: 10px;">
-                    <div class="card-body align-items-center d-flex justify-content-center">
+                     style="width:75%;  margin: 0 auto; float: none; margin-bottom: 30px;">
+                    <div class="card-header align-items-center d-flex justify-content-center">
                         <input type="hidden" name="meetingId" value="{{purposeDetail.id}}">Meeting ID :
-                        {{purposeDetail.id}}</input>
+                        {{created_event.id}}</input>
                     </div>
-                    <div class="card-body align-items-center d-flex justify-content-center">
-                        <h6>Attending : {{purposeDetail.vip}}</h6>
-                    </div>
-                    <div class="card-body align-items-center d-flex justify-content-center">
-                        <h6>Main Purpose : {{purposeDetail.main_purpose}}</h6>
-                    </div>
-                    <div class="card-body align-items-center d-flex justify-content-center">
-                        <h6>Sub Purpose : {{purposeDetail.sub_purpose}}</h6>
-                    </div>
+                    <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px; margin-top: 15px" >Attending : {{created_event.purposeitem.vip}}</h6>
+                    <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px">Main Purpose : {{created_event.purposeitem.main_purpose}}</h6>
+                    <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px">Sub Purpose : {{created_event.purposeitem.sub_purpose}}</h6>
+                    <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px"> Date: {{created_event.day}} </h6>
+                    <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px"> Time: {{created_event.start_time}} - {{created_event.end_time}}</h6>
+                    <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px"> Officer Going To Attend </h6>
+                    <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px; margin-bottom: 15px"> Meeting Avenue </h6>
 
                     <div class="card-footer text-center">
-                        <button type="submit" class="btn btn-primary btn-sm center" style="color:white" name="submit"
-                                value="{{date}}">
-                            Select
-                        </button>
+                        <a href="{% url 'cancel-slot' created_event.id %}" class="btn btn-secondary btn-sm center" style="color:white" name="Cancel">
+                            Cancel
+                        </a>
+                        <a href="{% url 'premiers-home'%}" type="submit" class="btn btn-primary btn-sm center" style="color:white" name="submit">Confirm</a>
                     </div>
 
 
                 </div>
 
-
-            </form>
         </div>
     </div>
 

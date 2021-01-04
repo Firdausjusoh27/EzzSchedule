@@ -1,16 +1,27 @@
 {% extends "premiers/base.html" %}
 {% block content %}
 <div class="event-container">
-        <div class="event">
-            <div class="event-right">
-                <h3 class="object-title">{{object.title}}</h3>
-                <div class="object-description">{{object.vip_name}}</div>
-                <div class="object-description">{{object.description}}</div>
-                <div class="object-description">{{object.date}}</div>
-                <div class="object-description">{{object.start_time}}</div>
-                <div class="object-description">{{object.end_time}}</div>
+    <div class="event">
+        <div class="container" style="margin: 30px">
+            <h5 class="text-center"> List of slot that you booked </h5>
+            <hr>
+
+            {% for slot in slots %}
+            <div class="card card-block d-flex shadow-sm"
+                 style="width:75%;  margin: 0 auto; float: none; margin-bottom: 50px; margin-top: 30px">
+                <div class="card-header align-items-center d-flex justify-content-center bg-primary text-white" >
+                    <input type="hidden" name="vipId" value="{{vip.id}}">Meeting ID : {{slot.id}}</input>
+                </div>
+                <h6 class="card-title align-items-center d-flex justify-content-center"
+                    style="margin:10px; margin-top: 15px">Meeting Date: {{slot.day}}</h6>
+
+                <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px">Meeting Time: {{slot.start_time}} - {{slot.end_time}}</h6>
+                <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px">Venue: Aliy Property Office</h6>
             </div>
+            <br>
+            {% endfor %}
         </div>
+    </div>
 
 </div>
 

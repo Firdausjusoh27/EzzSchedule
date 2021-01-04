@@ -1,6 +1,6 @@
 from datetime import *
 import datetime
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from events.models import Event, Slot
 from dateutil.parser import parse
 
@@ -49,11 +49,25 @@ def confirm(request):
         schedule_save = Event(user=request.user, purposeitem_id=meeting_ID, day=selected_date, start_time=slot.start_time, end_time=slot.end_time)
         # print("success", schedule_save.save())
         # print(schedule)
+        new_id = Event.objects.last().id
+        created_event = Event.objects.get(id=new_id)
 
     context = {
         'selected_date': selected,
+        'created_event': created_event
     }
     return render(request, "slots/confirm.html", context)
+
+
+def cancelSlot(request, pk):
+    cancel_slot = Event.objects.get(id=pk)
+    if request.method == 'POST':
+        cancel_slot.delete()
+        print("Delete Slot ------------------->")
+        return redirect('premiers-home')
+    context = {'slot': cancel_slot}
+    return render(request, 'slots/cancel.html', context)
+
 
 
 def select(request):

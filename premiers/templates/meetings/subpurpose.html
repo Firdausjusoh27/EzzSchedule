@@ -2,7 +2,7 @@
 {% block content %}
 <div class="event-container">
     <div class="event">
-        <div class="container">
+        <div class="container" style="margin: 30px">
             <h1 class="text-center"> Xera Scheduling </h1>
             <h5 class="text-center"> Refine nature of business </h5>
             <hr>
@@ -10,13 +10,18 @@
                 {% for sub in subs %}
                 <div class="col-md-4">
                     <div class="card mb-4 shadow-sm">
-                        <div style=" text-align: center; display: block;">
-                            <img src="{{sub.image.url}}" alt="" class="img-fluid" style="width: 150px; height:180px;">
+                        <div class="card-header align-items-center d-flex justify-content-center bg-primary text-white">
+                            <input type="hidden">{{sub.sub_item}}</input>
                         </div>
-<!--                            <ls>{{sub.id}}</ls>-->
-<!--                        <ls>{{main.subpurpose_set.all}}</ls>-->
+                        <div style=" text-align: center; display: block; margin-top: 5px; margin-bottom: 5px">
+                            <img src="{{sub.image.url}}" alt="" class="img-fluid" style="width: 150px; height:150px;">
+                        </div>
+                        <!--                            <ls>{{sub.id}}</ls>-->
+                        <!--                        <ls>{{main.subpurpose_set.all}}</ls>-->
 
-                        <a href="{% url 'ezz-recommend' sub.id %}" class="btn btn-primary">{{sub.sub_item}}</a>
+                        <div class="card-footer text-center">
+                            <a style="width:75px" href="{% url 'ezz-recommend' sub.id %}" class="btn btn-primary">Select</a>
+                        </div>
                     </div>
                     <br>
                 </div>

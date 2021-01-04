@@ -2,20 +2,50 @@
 {% block content %}
 {% load crispy_forms_tags %}
 <div class="event-container">
-    {% if vip_name != Null %}
-        <h2>{{vip_name}}</h2>
-        <h2>{{vip_email}}</h2>
-        <h2>{{vip_company}}</h2>
-        <a style="width:100px" href="{% url 'ezz-purpose' %}" class="btn btn-primary">Next</a>
+    <div class="event">
+        <div class="container" style="margin: 30px">
+            {% if vip.name != Null %}
 
-    {% else %}
-        <h3>Enter the detail of the person attending the meeting</h3>
-        <form action="" method="post">
-            {% csrf_token %}
-            {{form|crispy}}
-            <input type="Submit">
-        </form>
-    {% endif %}
+            <h5 class="text-center"> Attending Detail. You can update or continue with previous
+                attending.</h5>
+            <hr>
+            <div class="card card-block d-flex shadow-sm"
+                 style="width:75%;  margin: 0 auto; float: none; margin-bottom: 50px; margin-top: 30px">
+                <div class="card-header align-items-center d-flex justify-content-center bg-primary text-white">
+                    <input type="hidden" name="vipId" value="{{vip.id}}">ATTENDING ID :
+                    {{vip.id}}</input>
+                </div>
+                <h6 class="card-title align-items-center d-flex justify-content-center"
+                    style="margin:10px; margin-top: 15px">Attending Name: {{vip.title}} {{vip.name}}</h6>
+
+                <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px"> Company
+                    Name: {{vip.company}} {{vip.company_Type}}</h6>
+                <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px"> Attending
+                    Position:
+                    {{vip.position}}</h6>
+                <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px">Attending
+                    Email: {{vip.email}}</h6>
+
+                <div class="card-footer text-center">
+                    <a style="width:100px" href="{% url 'premiers-vip' vip.id %}" class="btn btn-secondary">Update</a>
+                    <a style="width:100px" href="{% url 'ezz-purpose' %}" class="btn btn-primary">Next</a>
+                </div>
+
+
+            </div>
+
+
+            {% else %}
+            <h3>Enter the detail of the person attending the meeting</h3>
+            <form action="" method="post">
+                {% csrf_token %}
+                {{form|crispy}}
+                <input type="Submit">
+            </form>
+            {% endif %}
+        </div>
+    </div>
+
 </div>
 
 
