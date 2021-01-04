@@ -1,0 +1,65 @@
+{% extends "premiers/base.html" %}
+{% block content %}
+{% load static %}
+<main role="main" class="container fadeInLeft">
+    <div class="row">
+        <div class="col-md-7 article-metadata">
+            <h3 style="padding:2px"> About </h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-7">
+            <p> News is information about current events. This may be provided through many different
+                media: word of mouth,
+                printing, postal systems, broadcasting, electronic communication, or through the testimony of observers
+                and
+                witnesses to events. <br><br>
+
+                Common topics for news reports include war, government, politics, education, health, the environment,
+                economy, business, fashion, and entertainment, as well as athletic events, quirky or unusual events.
+                Government proclamations, concerning royal ceremonies, laws, taxes, public health, and criminals, have
+                been
+                dubbed news since ancient times. Humans exhibit a nearly universal desire to learn and share news, which
+                they satisfy by talking to each other and sharing information. Technological and social developments,
+                often
+                driven by government communication and espionage networks, have increased the speed with which news can
+                spread, as well as influenced its content. The genre of news as we know it today is closely associated
+                with
+                the newspaper, which originated in China as a court bulletin and spread, with paper and printing press,
+                to
+                Europe.</p>
+        </div>
+
+        <div class="col-md-5">
+            <div class="content-section" style="background-image: url({% static 'premiers/img/gold-bg.jpg' %})">
+                <h5>Developed by:</h5>
+                <div align="center">
+                    <img src="{% static 'premiers/img/firdaus.jpg' %}" width="230" height="230">
+                    <br>
+                    <small><b>MOHAMAD FIRDAUS BIN JUSOH</b></small>
+                    <br>
+                    <small>FACULTY  OF COMPUTER SCIENCE AND INFORMATION TECHNOLOGY</small>
+                    <br>
+                    <small>DEPARTMENT OF ARTIFICIAL INTELLIGENCE</small>
+                    <br>
+                    <small>17157139/2 | FINAL YEAR STUDENT</small>
+                    <br>
+                    <small>FINAL YEAR PROJECT</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="article-metadata"></div>
+    <br><br>
+    <div align="center">
+        <a href="https://www.um.edu.my/">
+            <img src="{% static 'premiers/img/UM-Logo.png' %}" width="30%" height="30%">
+        </a>
+        <a href="http://www.fsktm.um.edu.my/">
+            <img  src="{% static 'premiers/img/fsktm-Logo.png' %}" width="30%" height="30%">
+        </a>
+    </div>
+</main>
+
+
+{% endblock content %}

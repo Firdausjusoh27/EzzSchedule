@@ -27,7 +27,6 @@ class Event(models.Model):
     class Meta:
         verbose_name = u'Scheduling'
         verbose_name_plural = u'Scheduling'
-        ordering = ['-day']
 
 
     def check_overlap(self, fixed_start, fixed_end, new_start, new_end):

@@ -19,13 +19,24 @@
                         <!--                        <ls>{{main.subpurpose_set.all}}</ls>-->
 
                         <div class="card-footer text-center">
-                            <a style="width:75px" href="{% url 'ezz-purposedetail' main.id %}" class="btn btn-outline-secondary">Info</a>
+                            <a style="width:75px" href="{% url 'ezz-purposedetail' main.id %}"
+                               class="btn btn-outline-secondary">Info</a>
                             <a style="width:75px" href="{% url 'ezz-subpurpose' main.id %}" class="btn btn-primary">Select</a>
                         </div>
                     </div>
                     <br>
                 </div>
                 {% endfor %}
+            </div>
+            <div style="margin-left: 44%">
+                <nav aria-label="...">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" href="{% url 'ezz-vip' %}">Previous</a>
+                        </li>
+                    </ul>
+                </nav>
+
             </div>
         </div>
     </div>

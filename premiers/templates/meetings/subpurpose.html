@@ -3,8 +3,7 @@
 <div class="event-container">
     <div class="event">
         <div class="container" style="margin: 30px">
-            <h1 class="text-center"> Xera Scheduling </h1>
-            <h5 class="text-center"> Refine nature of business </h5>
+            <h3 class="text-center"> Refine nature of business </h3>
             <hr>
             <div class="row mt-3">
                 {% for sub in subs %}
@@ -20,13 +19,27 @@
                         <!--                        <ls>{{main.subpurpose_set.all}}</ls>-->
 
                         <div class="card-footer text-center">
-                            <a style="width:75px" href="{% url 'ezz-recommend' sub.id %}" class="btn btn-primary">Select</a>
+                            <a style="width:75px" href="{% url 'ezz-recommend' sub.id %}"
+                               class="btn btn-primary">Select</a>
                         </div>
                     </div>
                     <br>
                 </div>
                 {% endfor %}
+
+
             </div>
+            <div style="margin-left: 44%">
+                <nav aria-label="..." >
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" href="{% url 'ezz-purpose' %}">Previous</a>
+                        </li>
+                    </ul>
+                </nav>
+
+            </div>
+
         </div>
     </div>
 

@@ -3,16 +3,29 @@
 
 
 <div class="card card-block d-flex shadow-sm"
-     style="width:50%;  margin: 0 auto; float: none; margin-bottom: 50px; margin-top: 30px">
+     style="width:70%;  margin: 0 auto; float: none; margin-bottom: 50px; margin-top: 30px">
     <div class="card-header align-items-center d-flex justify-content-center bg-primary text-white">
         <input type="hidden">{{main_detail}}</input>
     </div>
+    <h5 style="font-size: 16px; margin:10px; margin-top: 15px">DESCRIPTION</h5>
     <p class="card-title align-items-center d-flex justify-content-center"
-       style="margin:10px; margin-top: 15px">{{main_detail.description}}</p>
+       style="margin-left:20px;">{{main_detail.description}}</p>
+
+    {% for sub in sub_detail %}
+    <h5 style="font-size: 16px; margin:10px; margin-top: 15px">{{sub.sub_item}}</h5>
+    <p class="card-title align-items-center d-flex justify-content-center"
+       style="margin-left:20px;">{{sub.description}}</p>
+    {% endfor %}
 
 
-    <div class="card-footer text-center">
-        <a style="width:100px" href="{% url 'ezz-purpose' %}" class="btn btn-secondary">Back</a>
+    <div class="card-footer text-center align-items-center">
+        <nav aria-label="..." style="margin-left: 44%">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" href="{% url 'ezz-purpose' %}">Previous</a>
+                </li>
+            </ul>
+        </nav>
     </div>
 
 

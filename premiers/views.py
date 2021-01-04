@@ -15,6 +15,10 @@ def home(request):
     return render(request, 'premiers/home.html', {'title': 'Home'})
 
 
+def about(request):
+    return render(request, 'premiers/about.html', {'title': 'About'})
+
+
 def booklist(request):
     return render(request, 'premiers/booklist.html', {'title': 'Booklist'})
 
@@ -118,11 +122,14 @@ class purposedetail(TemplateView):
         # get id from request url
         main_id = self.kwargs['pro_id']
         detail = MainPurpose.objects.get(id=main_id)
-        subdetail = SubPurpose.objects.filter(main_purpose_id=main_id)
+        sub_detail = SubPurpose.objects.filter(main_purpose_id=main_id)
         print("------------------->", detail)
         print("------------------>", detail.description)
+        context = {
+            'main_detail': detail,
+            'sub_detail': sub_detail,
+        }
 
-        context['main_detail'] = detail
         return context
 
 
@@ -205,6 +212,20 @@ class recommend(TemplateView):
 
         else:
             category = "ELITE"
+            time_range = 5
+            base = datetime.date.today()
+            next_week = base + datetime.timedelta(days=14)
+            date_list = [next_week + datetime.timedelta(days=x) for x in range(time_range)]
+            free_date = []
+            selected_date = []
+
+            for x in date_list:
+                events = Event.objects.filter(day=x)
+                if events.exists():
+                    print("There is event on this date", x)
+                else:
+                    free_date.append(x)
+                    print("No Event", x)
 
         for y in range(3):
             selected_date.append(free_date[y])
