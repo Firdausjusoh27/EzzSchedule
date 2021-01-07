@@ -5,11 +5,11 @@
 <div class="event-container">
     <div class="event">
         <div class="container" style="margin: 30px">
-            <h5 class="text-center">Please CONFIRM your selection. Thank you</h5>
+            <h5 class="text-center">Please confirm the appointment details you have selected</h5>
             <hr>
                 <div class="card card-block d-flex"
                      style="width:75%;  margin: 0 auto; float: none; margin-bottom: 30px;">
-                    <div class="card-header align-items-center d-flex justify-content-center">
+                    <div class="card-header align-items-center d-flex justify-content-center bg-danger text-white">
                         <input type="hidden" name="meetingId" value="{{purposeDetail.id}}">Meeting ID :
                         {{created_event.id}}</input>
                     </div>
@@ -25,7 +25,7 @@
                         <a href="{% url 'cancel-slot' created_event.id %}" class="btn btn-secondary btn-sm center" style="color:white" name="Cancel">
                             Cancel
                         </a>
-                        <a href="{% url 'premiers-home'%}" type="submit" class="btn btn-primary btn-sm center" style="color:white" name="submit">Confirm</a>
+                        <a href="{% url 'premiers-home'%}" type="submit" class="btn btn-danger btn-sm center" style="color:white" name="submit">Confirm</a>
                     </div>
 
 

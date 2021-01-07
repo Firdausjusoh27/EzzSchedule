@@ -9,7 +9,7 @@
                 {% for sub in subs %}
                 <div class="col-md-4">
                     <div class="card mb-4 shadow-sm">
-                        <div class="card-header align-items-center d-flex justify-content-center bg-primary text-white">
+                        <div class="card-header align-items-center d-flex justify-content-center bg-danger text-white">
                             <input type="hidden">{{sub.sub_item}}</input>
                         </div>
                         <div style=" text-align: center; display: block; margin-top: 5px; margin-bottom: 5px">
@@ -20,7 +20,7 @@
 
                         <div class="card-footer text-center">
                             <a style="width:75px" href="{% url 'ezz-recommend' sub.id %}"
-                               class="btn btn-primary">Select</a>
+                               class="btn btn-danger">Select</a>
                         </div>
                     </div>
                     <br>
@@ -33,7 +33,7 @@
                 <nav aria-label="..." >
                     <ul class="pagination">
                         <li class="page-item">
-                            <a class="page-link" href="{% url 'ezz-purpose' %}">Previous</a>
+                            <a class="btn btn-outline-secondary" href="{% url 'ezz-purpose' %}">Previous</a>
                         </li>
                     </ul>
                 </nav>

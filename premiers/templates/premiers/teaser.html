@@ -1,53 +1,41 @@
-{% load static %}
-<!DOCTYPE html>
-<html>
-<head>
-<!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% extends "premiers/base.html" %}
+{% block content %}
+<div class="event-container">
+    <div class="event">
+        <div class="container" style="margin-top: 30px">
+            <h3 class="text-center"> Please select 1 suitable date and time for the appointment</h3>
+            <form action="#" method="POST">
+                {% csrf_token %}
+                <div class="row mt-3">
+                    {% for slot in slots %}
+                    <div class="col-md-4">
+                        <div class="card mb-4 shadow-sm my-auto">
+                            <div class="card card-block d-flex align-items-center" style="height: 200px">
+                                <div class="card-body align-items-center justify-content-center">
+                                    <p>iSlot ID : {{slot.id}}</p>
+                                    <h5 style="font-size:20px;" type="hidden" name="selectedDate" value="{{date}}">
+                                        Date : {{slot.date|date:"d M, Y" }}</h5>
+                                    <p>Meeting ID : {{slot.purpose_id.id}}</p>
+                                    <label>Time : {{slot.slot.name}} {{slot.slot.start_time}} - {{slot.slot.end_time}}</label>
+                                </div>
+                                <br>
+                            </div>
+                            <div class="card-footer text-center">
+                                <button type="submit" class="btn btn-primary btn-sm center" style="color:white"
+                                        name="submit" value="{{date}}">
+                                    Select
+                                </button>
+                            </div>
+                        </div>
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-
-    <link rel="stylesheet" type="text/css" href="{% static 'premiers/main.css' %}">
-    {% if title %}
-        <title>Ezz - {{ title }}</title>
-    {% else %}
-        <title>Ezz</title>
-    {% endif %}
-</head>
-
-<body>
-    <header class="site-header">
-      <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
-        <div class="container">
-          <a class="navbar-brand mr-4" href="{% url 'premiers-home' %}">EZZ CORPORATE SCHEDULING</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarToggle">
-            <div class="navbar-nav mr-auto">
-<!--              <a class="nav-item nav-link" href="{% url 'premiers-home' %}">Home</a>-->
-<!--              <a class="nav-item nav-link" href="{% url 'premiers-status' %}">Status</a>-->
-            </div>
-            <!-- Navbar Right Side -->
-            <div class="navbar-nav">
-              <a class="nav-item nav-link" href="{% url 'users-login' %}">LOGIN</a>
-              <a class="nav-item nav-link" href="{% url 'users-register' %}">REGISTER</a>
-            </div>
-          </div>
+                        <br>
+                    </div>
+                    {% endfor %}
+                </div>
+            </form>
         </div>
-      </nav>
-    </header>
+    </div>
+</div>
 
-      <div>
-          {% block content %}{% endblock %}
-      </div>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-</body>
-</html>
+{% endblock content %}

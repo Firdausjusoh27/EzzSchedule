@@ -11,7 +11,7 @@
             <hr>
             <div class="card card-block d-flex shadow-sm"
                  style="width:75%;  margin: 0 auto; float: none; margin-bottom: 50px; margin-top: 30px">
-                <div class="card-header align-items-center d-flex justify-content-center bg-primary text-white">
+                <div class="card-header align-items-center d-flex justify-content-center bg-danger text-white">
                     <input type="hidden" name="vipId" value="{{vip.id}}">ATTENDING ID :
                     {{vip.id}}</input>
                 </div>
@@ -28,7 +28,7 @@
 
                 <div class="card-footer text-center">
                     <a style="width:100px" href="{% url 'premiers-vip' vip.id %}" class="btn btn-secondary">Update</a>
-                    <a style="width:100px" href="{% url 'ezz-purpose' %}" class="btn btn-primary">Next</a>
+                    <a style="width:100px" href="{% url 'ezz-purpose' %}" class="btn btn-danger">Next</a>
                 </div>
 
 
@@ -48,7 +48,7 @@
                 <nav aria-label="...">
                     <ul class="pagination">
                         <li class="page-item">
-                            <a class="page-link" href="{% url 'premiers-home' %}">Previous</a>
+                            <a class="btn btn-outline-secondary" href="{% url 'premiers-home' %}">Previous</a>
                         </li>
                     </ul>
                 </nav>

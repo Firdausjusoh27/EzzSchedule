@@ -11,9 +11,22 @@ class Slot(models.Model):
     start_time = models.TimeField(u'Starting time', help_text=u'Starting time')
     end_time = models.TimeField(u'Final time', help_text=u'Final time')
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         verbose_name = u'Slot'
         verbose_name_plural = u'Slot'
+
+
+class iSlot(models.Model):
+    purpose_id = models.ForeignKey(PurposeDetail, on_delete=models.CASCADE, null=True)
+    date = models.DateField(u'Date of the event', help_text=u'Date of the event')
+    slot = models.ForeignKey(Slot, on_delete=models.CASCADE, null=True)
+
+    class Meta:
+        verbose_name = u'Instant Slot'
+        verbose_name_plural = u' Instant Slot'
 
 
 class Event(models.Model):

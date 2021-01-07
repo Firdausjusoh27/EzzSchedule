@@ -10,7 +10,7 @@
                 {% for main in mains %}
                 <div class="col-md-4">
                     <div class="card mb-4 shadow-sm">
-                        <div class="card-header align-items-center d-flex justify-content-center bg-primary text-white">
+                        <div class="card-header align-items-center d-flex justify-content-center bg-danger text-white">
                             <input type="hidden">{{main.main_item}}</input>
                         </div>
                         <div style=" text-align: center; display: block; margin-top: 5px; margin-bottom: 5px">
@@ -21,7 +21,7 @@
                         <div class="card-footer text-center">
                             <a style="width:75px" href="{% url 'ezz-purposedetail' main.id %}"
                                class="btn btn-outline-secondary">Info</a>
-                            <a style="width:75px" href="{% url 'ezz-subpurpose' main.id %}" class="btn btn-primary">Select</a>
+                            <a style="width:75px" href="{% url 'ezz-subpurpose' main.id %}" class="btn btn-danger">Select</a>
                         </div>
                     </div>
                     <br>
@@ -32,7 +32,7 @@
                 <nav aria-label="...">
                     <ul class="pagination">
                         <li class="page-item">
-                            <a class="page-link" href="{% url 'ezz-vip' %}">Previous</a>
+                            <a class="btn btn-outline-secondary" href="{% url 'ezz-vip' %}">Previous</a>
                         </li>
                     </ul>
                 </nav>

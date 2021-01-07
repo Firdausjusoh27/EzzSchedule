@@ -91,3 +91,5 @@ class PurposeDetail(models.Model):
     vip = models.ForeignKey(Vip, on_delete=models.CASCADE, blank=True, null=True)
     main_purpose = models.ForeignKey(MainPurpose, on_delete=models.CASCADE, blank=True, null=True)
     sub_purpose = models.ForeignKey(SubPurpose, on_delete=models.CASCADE, blank=True, null=True)
+    fuzzy_weight = models.FloatField(null=True)
+

@@ -1,16 +1,17 @@
 {% extends "premiers/base.html" %}
 {% block content %}
+{% load static %}
 
-<div style="max-width: 500px; position:fixed; left:27%; top:30%;">
-    <h1 class="text-center" style="margin-bottom: 20px"> Welcome to Xera Scheduling </h1>
+<div style="max-width: 500px; position:fixed; left:27%;">
+    <img src="{% static 'premiers/img/Xera.png' %}" style="text-align:center; display:block;" alt="CH Logo" height="250px" width="500px">
     <a href="{% url 'ezz-vip' %}">
-        <button type="button" class="btn btn-primary btn-lg btn-block"
-                style=" margin-bottom: 10px; border-radius: 15px !important">Book A Slot
+        <button type="button" class="btn btn-danger"
+                style="margin-bottom: 10px; border-radius: 15px; width: 500px; height: 50px; font-size: 22px">Book A Slot
         </button>
     </a>
     <a href="{% url 'premiers-status' %}">
-        <button type="button" class="btn btn-primary btn-lg btn-block"
-                style=" margin-bottom: 10px; border-radius: 15px !important">Check Your Slot
+        <button type="button" class="btn btn-dark"
+                style="margin-bottom: 10px; border-radius: 15px; width: 500px; height: 50px; font-size: 22px;">Check Your Slot
         </button>
     </a>
 

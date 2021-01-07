@@ -2,6 +2,7 @@ from datetime import *
 import datetime
 from django.shortcuts import render, redirect
 from events.models import Event, Slot
+from premiers.models import PurposeDetail
 from dateutil.parser import parse
 
 from django.views.generic import DetailView, TemplateView
@@ -37,9 +38,9 @@ def confirm(request):
         meeting_ID = data.get('meetingId')
         selected_slot = data.get('slot')
         selected = data.get('submit')
-        # print("---------------------->", meeting_ID)
-        # print("---------------------->", selected)
-        # print("---------------------->", selected_slot)
+        print("---------------------->", meeting_ID)
+        print("---------------------->", selected_slot)
+        print("---------------------->", selected)
         slot = Slot.objects.get(id=selected_slot)
         # print("slot----------------->", slot)
         # print(slot.start_time)
@@ -47,7 +48,7 @@ def confirm(request):
         # schedule = Event.objects.filter(id=1).values()
         selected_date = parse(selected)
         schedule_save = Event(user=request.user, purposeitem_id=meeting_ID, day=selected_date, start_time=slot.start_time, end_time=slot.end_time)
-        # print("success", schedule_save.save())
+        print("success", schedule_save.save())
         # print(schedule)
         new_id = Event.objects.last().id
         created_event = Event.objects.get(id=new_id)
@@ -63,6 +64,7 @@ def cancelSlot(request, pk):
     cancel_slot = Event.objects.get(id=pk)
     if request.method == 'POST':
         cancel_slot.delete()
+        PurposeDetail.objects.last().delete()
         print("Delete Slot ------------------->")
         return redirect('premiers-home')
     context = {'slot': cancel_slot}

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import EventDummy, Appointment, MainPurpose, SubPurpose, Vip, PurposeDetail
-from events.models import Event, Slot
+from events.models import Event, Slot, iSlot
 from django.contrib.auth.models import User
 from django.http import JsonResponse, Http404
 from .forms import VipForm
@@ -13,6 +13,16 @@ from django.views.generic import DetailView, TemplateView
 
 def home(request):
     return render(request, 'premiers/home.html', {'title': 'Home'})
+
+
+def teaser(request):
+    all_slot = iSlot.objects.filter(purpose_id=24)
+    print(all_slot)
+    context = {
+        'slots': all_slot
+    }
+
+    return render(request, 'premiers/teaser.html', context)
 
 
 def about(request):
@@ -38,30 +48,6 @@ def status(request):
         'slots': logged_in_user_slots,
     }
     return render(request, 'premiers/status.html', context)
-
-
-# def vip(request):
-#
-#     # if request.user.vip is not None:
-#     #     user = request.user.vip
-#     #     print("Userrrrrrrrrrrrr", user)
-#     # if else to check Vip have register or not
-#     # if have just confirm back this VIP
-#     # can edit new VIP if have changes
-#
-#     form = VipForm()
-#
-#     if request.method == 'POST':
-#         form = VipForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#         return redirect('ezz-purpose')
-#     context = {
-#         'title': 'VIP DETAILS',
-#         'form': form,
-#     }
-#
-#     return render(request, 'meetings/vip.html', context)
 
 
 def vip(request):
@@ -106,14 +92,6 @@ def updateVip(request, pk):
     return render(request, 'meetings/vipupdate.html', context)
 
 
-# def sitem(request):
-#     form = PurposeForm()
-#
-#     context = {
-#         'form': form
-#     }
-#     return render(request, 'meetings/purposeitem.html', context)
-
 class purposedetail(TemplateView):
     template_name = "meetings/purposedetail.html"
 
@@ -155,6 +133,37 @@ class subpurpose(TemplateView):
         return context
 
 
+def cancel_select(request, pk):
+    cancel_slot = PurposeDetail.objects.get(id=pk)
+    cancel_slot.delete()
+    return redirect('premiers-home')
+
+
+def check_overlap(fixed_start, fixed_end, new_start, new_end):
+    overlap = False
+    if new_start == fixed_end or new_end == fixed_start:  # edge case
+        overlap = False
+    elif (new_start >= fixed_start and new_start <= fixed_end) or (
+            new_end >= fixed_start and new_end <= fixed_end):  # innner limits
+        overlap = True
+    elif new_start <= fixed_start and new_end >= fixed_end:  # outter limits
+        overlap = True
+
+    return overlap
+
+
+# function to get weekday list
+def weekday_list(time_range, base):
+    date_list = [base + datetime.timedelta(days=x) for x in range(time_range)]
+    weekday = []
+    weekdays = [5, 6]
+    for dt in date_list:
+        if dt.weekday() not in weekdays:  # to print only the weekdates
+            print(dt.strftime("%Y-%m-%d"))
+            weekday.append(dt)
+    return weekday
+
+
 class recommend(TemplateView):
     template_name = "meetings/recommend.html"
 
@@ -165,40 +174,75 @@ class recommend(TemplateView):
         # filter product by id
         sub = SubPurpose.objects.get(id=sub_id)
         main = MainPurpose.objects.get(id=sub.main_purpose_id)
+        fuzzy_result = round(fuzzy(main.main_weight, sub.sub_weight))
+        print("Fuzzy Result ------------------->", fuzzy_result)
 
         purpose_detail = PurposeDetail(user=self.request.user, vip=self.request.user.vip, main_purpose=main,
                                        sub_purpose=sub)
-        # purpose_detail.save()
+        purpose_detail.save()
         newid = PurposeDetail.objects.last().id
         purposeDetail = PurposeDetail.objects.get(id=newid)
         print("NEW ID", newid)
-        fuzzy_result = round(fuzzy(main.main_weight, sub.sub_weight))
-        selected_slot = Slot.objects.all()
 
+        selected_slot = Slot.objects.all()
+        time_range = 10
+        base = datetime.date.today()
+
+        # Glory Category find free day within 5 workings day & the special thing is Xera open special slot.
         if fuzzy_result > 70:
             category = "GLORY"
-            time_range = 5
-            base = datetime.date.today()
-            date_list = [base + datetime.timedelta(days=x) for x in range(time_range)]
-            print("Date Listtttt", date_list)
+            print(category)
+            date_list = weekday_list(time_range, base)
             free_date = []
             selected_date = []
+            count = 0
 
             for x in date_list:
+                if count >= 6:
+                    print("6 slot and more have submit:")
                 events = Event.objects.filter(day=x)
                 if events.exists():
                     print("There is event on this date", x)
+                    for event in events:
+                        for slot in selected_slot:
+                            if check_overlap(event.start_time, event.end_time, slot.start_time, slot.end_time):
+                                print('There is overlap on :' + str(event.day) + ' ' + str(slot.name) + ' ' + str(slot.start_time) + '-' + str(slot.end_time))
+                            else:
+                                print('This slot not overlap: ' + str(event.day) + ' ' + str(slot.name) + ' ' + str(slot.start_time) + '-' + str(slot.end_time))
+                                i_slot = iSlot(purpose_id=purposeDetail, date=event.day, slot=slot)
+                                i_slot.save()
+                                print("Success Save iSlot")
+                                count = count+1
                 else:
                     free_date.append(x)
+                    for slot in selected_slot:
+                        if count < 6:
+                            i_slot = iSlot(purpose_id=purposeDetail, date=x, slot=slot)
+                            i_slot.save()
+                            count = count+1
                     print("No Event", x)
-            print(free_date)
 
-        elif fuzzy_result > 45 & fuzzy_result < 70:
+            print("")
+            all_slot = iSlot.objects.filter(purpose_id=newid)
+            print(all_slot)
+
+            context = {
+                'mains': main,
+                'subs': sub,
+                'category': category,
+                'selected_date': selected_date,
+                'purposeDetail': purposeDetail,
+                'selected_slot': selected_slot,
+                'all_slot': all_slot,
+            }
+            return context
+
+        # Master Category just find free day within 14 workings day
+        elif 45 <= fuzzy_result <= 70:
             category = "MASTER"
-            time_range = 5
-            base = datetime.date.today()
-            next_week = base + datetime.timedelta(days=7)
-            date_list = [next_week + datetime.timedelta(days=x) for x in range(time_range)]
+            print(category)
+            next_week = base
+            date_list = weekday_list(time_range, next_week)
             free_date = []
             selected_date = []
 
@@ -210,19 +254,24 @@ class recommend(TemplateView):
                     free_date.append(x)
                     print("No Event", x)
 
+        # Elite Category just find free day within 30 workings day
         else:
             category = "ELITE"
-            time_range = 5
-            base = datetime.date.today()
-            next_week = base + datetime.timedelta(days=14)
-            date_list = [next_week + datetime.timedelta(days=x) for x in range(time_range)]
+            print(category)
+            next_week = base
+            date_list = weekday_list(time_range, next_week)
             free_date = []
             selected_date = []
 
+            # Loop function to find free or busy day in calendar
             for x in date_list:
                 events = Event.objects.filter(day=x)
+                selected_slot = Slot.objects.all()
                 if events.exists():
-                    print("There is event on this date", x)
+                    for event in events:
+                        for slot in selected_slot:
+                            if check_overlap(event.start_time, event.end_time, slot.start_time, slot.end_time):
+                                print('There is overlap on :' + str(event.day) + str(event.start_time) + '-' + str(event.end_time))
                 else:
                     free_date.append(x)
                     print("No Event", x)
@@ -261,48 +310,3 @@ class recommend(TemplateView):
     #     print(vip_name)
     #     print(vip_email)
     #     print(vip_company)
-
-
-def testing(request):
-    # context = JsonResponse({'events': Event.objects.all()})
-    #
-    # context = {
-    #     'events': Event.objects.all()
-    # }
-    #
-    data = list(EventDummy.objects.values())
-
-    return JsonResponse(data, safe=False)
-    # return render(request, 'premiers/testing.html')
-
-
-class CategoryView(TemplateView):
-    template_name = 'meetings/category.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['mains'] = MainPurpose.objects.all()
-        return context
-
-
-class AllSubView(TemplateView):
-    template_name = 'meetings/detailcategory.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['mains'] = MainPurpose.objects.all()
-        return context
-
-
-class CategoryDetailView(TemplateView):
-    template_name = "meetings/categorydetail.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # get id from request url
-        main_id = self.kwargs['pro_id']
-        print(main_id, "****************************************")
-        # filter product by id
-
-        context['subs'] = SubPurpose.objects.filter(main_purpose_id=main_id)
-        return context
