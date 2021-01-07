@@ -19,6 +19,7 @@ class Slot(models.Model):
         verbose_name_plural = u'Slot'
 
 
+
 class iSlot(models.Model):
     purpose_id = models.ForeignKey(PurposeDetail, on_delete=models.CASCADE, null=True)
     date = models.DateField(u'Date of the event', help_text=u'Date of the event')

@@ -18,8 +18,8 @@
                     <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px">Sub Purpose : {{created_event.purposeitem.sub_purpose}}</h6>
                     <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px"> Date: {{created_event.day}} </h6>
                     <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px"> Time: {{created_event.start_time}} - {{created_event.end_time}}</h6>
-                    <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px"> Officer Going To Attend </h6>
-                    <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px; margin-bottom: 15px"> Meeting Avenue </h6>
+                    <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px"> Representative: {{created_event.purposeitem.representative.title}} {{created_event.purposeitem.representative.name}}</h6>
+                    <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px; margin-bottom: 15px"> Meeting Avenue: Aliy Property Advisors Building </h6>
 
                     <div class="card-footer text-center">
                         <a href="{% url 'cancel-slot' created_event.id %}" class="btn btn-secondary btn-sm center" style="color:white" name="Cancel">

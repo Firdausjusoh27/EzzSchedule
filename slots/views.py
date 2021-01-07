@@ -46,6 +46,9 @@ def confirm(request):
         # print(slot.start_time)
         # print(slot.end_time)
         # schedule = Event.objects.filter(id=1).values()
+        # fuzzy_percent = PurposeDetail.objects.get(id=meeting_ID)
+        # a = fuzzy_percent.fuzzy_weight
+        # print("Fuzzy Percentage At Confirm ------->", a)
         selected_date = parse(selected)
         schedule_save = Event(user=request.user, purposeitem_id=meeting_ID, day=selected_date, start_time=slot.start_time, end_time=slot.end_time)
         print("success", schedule_save.save())

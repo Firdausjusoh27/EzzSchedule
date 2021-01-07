@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import EventDummy, Appointment, MainPurpose, SubPurpose, Vip, PurposeDetail
+from .models import EventDummy, Appointment, MainPurpose, SubPurpose, Vip, PurposeDetail, Representative
 from events.models import Event, Slot, iSlot
 from django.contrib.auth.models import User
 from django.http import JsonResponse, Http404
@@ -178,7 +178,7 @@ class recommend(TemplateView):
         print("Fuzzy Result ------------------->", fuzzy_result)
 
         purpose_detail = PurposeDetail(user=self.request.user, vip=self.request.user.vip, main_purpose=main,
-                                       sub_purpose=sub)
+                                       sub_purpose=sub, fuzzy_weight=fuzzy_result)
         purpose_detail.save()
         newid = PurposeDetail.objects.last().id
         purposeDetail = PurposeDetail.objects.get(id=newid)
@@ -197,24 +197,29 @@ class recommend(TemplateView):
             selected_date = []
             count = 0
 
+            save_detail = PurposeDetail.objects.get(id=newid)
+            save_detail.category = category
+            save_detail.fuzzy_weight = fuzzy_result
+            save_detail.representative = Representative.objects.get(id=1)
+            save_detail.save()
+
             for x in date_list:
-                if count >= 6:
-                    print("6 slot and more have submit:")
                 events = Event.objects.filter(day=x)
+                print("Events", events)
                 if events.exists():
                     print("There is event on this date", x)
-                    for event in events:
-                        for slot in selected_slot:
-                            if check_overlap(event.start_time, event.end_time, slot.start_time, slot.end_time):
-                                print('There is overlap on :' + str(event.day) + ' ' + str(slot.name) + ' ' + str(slot.start_time) + '-' + str(slot.end_time))
-                            else:
-                                print('This slot not overlap: ' + str(event.day) + ' ' + str(slot.name) + ' ' + str(slot.start_time) + '-' + str(slot.end_time))
-                                i_slot = iSlot(purpose_id=purposeDetail, date=event.day, slot=slot)
-                                i_slot.save()
-                                print("Success Save iSlot")
-                                count = count+1
+                    if len(events) == 1:
+                        for event in events:
+                            for slot in selected_slot:
+                                if check_overlap(event.start_time, event.end_time, slot.start_time, slot.end_time):
+                                    print('There is overlap on :' + str(event.day) + ' ' + str(slot.name) + ' ' + str(slot.start_time) + '-' + str(slot.end_time))
+                                else:
+                                    print('This slot not overlap: ' + str(event.day) + ' ' + str(slot.name) + ' ' + str(slot.start_time) + '-' + str(slot.end_time))
+                                    i_slot = iSlot(purpose_id=purposeDetail, date=event.day, slot=slot)
+                                    i_slot.save()
+                                    print("Success Save iSlot")
+                                    count = count+1
                 else:
-                    free_date.append(x)
                     for slot in selected_slot:
                         if count < 6:
                             i_slot = iSlot(purpose_id=purposeDetail, date=x, slot=slot)
@@ -246,6 +251,12 @@ class recommend(TemplateView):
             free_date = []
             selected_date = []
 
+            save_detail = PurposeDetail.objects.get(id=newid)
+            save_detail.category = category
+            save_detail.fuzzy_weight = fuzzy_result
+            save_detail.representative = Representative.objects.get(id=1)
+            save_detail.save()
+
             for x in date_list:
                 events = Event.objects.filter(day=x)
                 if events.exists():
@@ -262,6 +273,11 @@ class recommend(TemplateView):
             date_list = weekday_list(time_range, next_week)
             free_date = []
             selected_date = []
+            save_detail = PurposeDetail.objects.get(id=newid)
+            save_detail.category = category
+            save_detail.fuzzy_weight = fuzzy_result
+            save_detail.representative = Representative.objects.get(id=2)
+            save_detail.save()
 
             # Loop function to find free or busy day in calendar
             for x in date_list:

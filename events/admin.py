@@ -19,3 +19,4 @@ admin.site.register(Event, EventAdmin)
 admin.site.register(Slot, SlotEvent)
 admin.site.register(iSlot, iSlotAdmin)
 
+

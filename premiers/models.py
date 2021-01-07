@@ -5,6 +5,16 @@ from PIL import Image
 from django.conf import settings
 
 
+class Representative(models.Model):
+    title = models.CharField(max_length=200, null=True)
+    name = models.CharField(max_length=200, null=True)
+    position = models.CharField(max_length=200, null=True)
+    company = models.CharField(max_length=200, null=True)
+
+    def __str__(self):
+        return self.name
+
+
 class EventDummy(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField(max_length=300)
@@ -91,5 +101,7 @@ class PurposeDetail(models.Model):
     vip = models.ForeignKey(Vip, on_delete=models.CASCADE, blank=True, null=True)
     main_purpose = models.ForeignKey(MainPurpose, on_delete=models.CASCADE, blank=True, null=True)
     sub_purpose = models.ForeignKey(SubPurpose, on_delete=models.CASCADE, blank=True, null=True)
+    representative = models.ForeignKey(Representative, on_delete=models.CASCADE, blank=True, null=True)
+    category = models.CharField(max_length=200, null=True)
     fuzzy_weight = models.FloatField(null=True)
 
