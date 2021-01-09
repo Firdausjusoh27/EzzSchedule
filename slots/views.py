@@ -5,32 +5,6 @@ from events.models import Event, Slot
 from premiers.models import PurposeDetail
 from dateutil.parser import parse
 
-from django.views.generic import DetailView, TemplateView
-from django.http import HttpResponse, request
-
-
-# Create your views here.
-#
-# def confirm(request):
-#     if request.method == "POST":
-#         meeting_date = request.POST.get('meeting_date')
-#
-#     return render(request, 'slots/confirm.html')
-
-
-# class confirm(TemplateView):
-#     template_name = "slots/confirm.html"
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         # get id from request url
-#         selected_date = self.kwargs['pro_id']
-#         print("Selected Date---->", selected_date)
-#         # filter product by id
-#         context = {
-#             'selected_date': selected_date,
-#         }
-#         return context
 
 def confirm(request):
     if request.method == "POST":
@@ -71,8 +45,8 @@ def cancelSlot(request, pk):
         print("Delete Slot ------------------->")
         return redirect('premiers-home')
     context = {'slot': cancel_slot}
+    # https://getbootstrap.com/docs/4.0/components/modal/
     return render(request, 'slots/cancel.html', context)
-
 
 
 def select(request):

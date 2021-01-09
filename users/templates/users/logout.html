@@ -1,9 +1,22 @@
 {% extends "premiers/base.html" %}
 {% block content %}
-    <h2> You have been logged out</h2>
-    <div class="border-top pt-3">
-        <small class="text-muted">
-            <a href="{% url 'users-login' %}">Log In Again</a>
-        </small>
+
+<div class="event-container">
+    <div class="event">
+        <div class="container" style="margin: 30px">
+            <hr>
+            <div class="card card-block d-flex shadow-sm"
+                 style="width:75%; height:150px;  margin: 0 auto; float: none; margin-top: 40px; text-align: center;">
+                <h3 style="margin-top:10%">You have been logged out</h3>
+            </div>
+            <div style="margin-left: 38%; margin-top: 20px">
+
+                <div class="border-top pt-3" style="margin-left: 3%">
+                        <a class="btn btn-primary" href="{% url 'users-login' %}">Log In Again</a>
+                </div>
+
+            </div>
+        </div>
     </div>
+</div>
 {% endblock content %}

@@ -10,7 +10,7 @@
             <form action="{% url 'ezz-confirm'%}" method="POST">
                 {% csrf_token %}
                 <div class="card card-block d-flex" style="height: 200px">
-                    <div class="card-body align-items-center d-flex justify-content-center bg-danger text-white">
+                    <div class="card-body align-items-center d-flex justify-content-center bg-dark text-white">
                         <input type="hidden" name="meetingId" value="{{purposeDetail.id}}">Meeting ID :
                         {{purposeDetail.id}}</input>
                     </div>
@@ -31,18 +31,18 @@
                     {% for slot in all_slot %}
                     <div class="col-md-4">
                         <div class="card mb-4 shadow-sm my-auto">
-                            <div class="card-header align-items-center d-flex justify-content-center bg-danger text-white">
+                            <div class="card-header align-items-center d-flex justify-content-center bg-dark text-white">
                                 <input type="hidden" style="text-align: center;">Date : {{slot.date|date:"d M, Y" }}</input>
                             </div>
-                            <div class="card card-block d-flex align-items-center" style="height: 150px">
+                            <div class="card card-block d-flex align-items-center" style="height: 70px">
                                 <div class="card-body align-items-center justify-content-center">
-                                    <input type="radio" name="slot" value="{{slot.slot.id}}">
+                                    <input type="radio" name="slot" value="{{slot.slot.id}}" checked>
                                     <label>{{slot.slot.name}} {{slot.slot.start_time}} - {{slot.slot.end_time}}</label>
                                 </div>
                                 <br>
                             </div>
                             <div class="card-footer text-center">
-                                <button type="submit" class="btn btn-danger btn-sm center" style="color:white"
+                                <button type="submit" class="btn btn-primary btn-sm center" style="color:white"
                                         name="submit" value="{{slot.date}}">
                                     Select
                                 </button>
@@ -57,7 +57,7 @@
                     <nav aria-label="..." style="margin-left: 43%">
                         <ul class="pagination">
                             <li class="page-item">
-                                <a type="button" class="btn btn-outline-secondary"
+                                <a type="button" class="btn btn-outline-danger"
                                    href="{% url 'cancel-select' purposeDetail.id %}">Cancel Select</a>
                             </li>
                         </ul>
@@ -69,7 +69,7 @@
             <form action="{% url 'ezz-confirm'%}" method="POST">
                 {% csrf_token %}
                 <div class="card card-block d-flex" style="height: 200px">
-                    <div class="card-body align-items-center d-flex justify-content-center bg-danger text-white">
+                    <div class="card-body align-items-center d-flex justify-content-center bg-dark text-white">
                         <input type="hidden" name="meetingId" value="{{purposeDetail.id}}">Meeting ID :
                         {{purposeDetail.id}}</input>
                     </div>
@@ -90,13 +90,13 @@
                     {% for date in selected_date %}
                     <div class="col-md-4">
                         <div class="card mb-4 shadow-sm my-auto">
-                            <div class="card-header align-items-center d-flex justify-content-center bg-danger text-white">
+                            <div class="card-header align-items-center d-flex justify-content-center bg-dark text-white">
                                 <input type="hidden" style="text-align: center;">Date : {{date|date:"d M, Y" }}</input>
                             </div>
-                            <div class="card card-block d-flex align-items-center" style="height: 150px">
+                            <div class="card card-block d-flex align-items-center" style="height: 100px">
                                 <div class="card-body align-items-center justify-content-center">
                                     {% for slot in selected_slot %}
-                                    <input type="radio" name="slot" value="{{slot.id}}">
+                                    <input type="radio" name="slot" value="{{slot.id}}" checked>
                                     <label>{{slot.name}} {{slot.start_time}} - {{slot.end_time}}</label>
                                     <br>
                                     {% empty %}
@@ -108,7 +108,7 @@
 
                             </div>
                             <div class="card-footer text-center">
-                                <button type="submit" class="btn btn-danger btn-sm center" style="color:white"
+                                <button type="submit" class="btn btn-primary btn-sm center" style="color:white"
                                         name="submit" value="{{date}}">
                                     Select
                                 </button>
@@ -124,7 +124,7 @@
                     <nav aria-label="..." style="margin-left: 43%">
                         <ul class="pagination">
                             <li class="page-item">
-                                <a type="button" class="btn btn-outline-secondary"
+                                <a type="button" class="btn btn-outline-danger"
                                    href="{% url 'cancel-select' purposeDetail.id %}">Cancel Select</a>
                             </li>
                         </ul>

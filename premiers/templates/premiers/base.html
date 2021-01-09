@@ -26,7 +26,11 @@
                style="width: 170px; border-right: 1px solid white; margin-right: 10px; padding-right: 10px; margin-left:-80px">
                 <img src="http://www.cloud-connect.asia/wp-content/uploads/2016/01/cloudconnect-logo.png" width="100%">
             </a>
+            {% if user.is_authenticated %}
             <a class="navbar-brand mr-4" href="{% url 'premiers-home' %}">Xera Scheduling</a>
+            {% else %}
+            <a class="navbar-brand mr-4" href="{% url 'premiers-event' %}">Xera Scheduling</a>
+            {% endif %}
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
                     aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -42,7 +46,7 @@
 
                 </div>
                 <!-- Navbar Right Side -->
-                <div class="navbar-nav" style="margin-right:-80px" >
+                <div class="navbar-nav" style="margin-right:-80px">
                     {% if user.is_authenticated %}
                     <a class="nav-item nav-link" href="{% url 'premiers-about' %}">About</a>
                     <a class="nav-item nav-link" href="{% url 'users-profile' %}">Profile</a>

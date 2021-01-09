@@ -7,29 +7,71 @@
         <div class="container" style="margin: 30px">
             <h5 class="text-center">Please confirm the appointment details you have selected</h5>
             <hr>
-                <div class="card card-block d-flex"
-                     style="width:75%;  margin: 0 auto; float: none; margin-bottom: 30px;">
-                    <div class="card-header align-items-center d-flex justify-content-center bg-danger text-white">
-                        <input type="hidden" name="meetingId" value="{{purposeDetail.id}}">Meeting ID :
-                        {{created_event.id}}</input>
-                    </div>
-                    <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px; margin-top: 15px" >Attending : {{created_event.purposeitem.vip}}</h6>
-                    <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px">Main Purpose : {{created_event.purposeitem.main_purpose}}</h6>
-                    <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px">Sub Purpose : {{created_event.purposeitem.sub_purpose}}</h6>
-                    <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px"> Date: {{created_event.day}} </h6>
-                    <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px"> Time: {{created_event.start_time}} - {{created_event.end_time}}</h6>
-                    <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px"> Representative: {{created_event.purposeitem.representative.title}} {{created_event.purposeitem.representative.name}}</h6>
-                    <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px; margin-bottom: 15px"> Meeting Avenue: Aliy Property Advisors Building </h6>
-
-                    <div class="card-footer text-center">
-                        <a href="{% url 'cancel-slot' created_event.id %}" class="btn btn-secondary btn-sm center" style="color:white" name="Cancel">
-                            Cancel
-                        </a>
-                        <a href="{% url 'premiers-home'%}" type="submit" class="btn btn-danger btn-sm center" style="color:white" name="submit">Confirm</a>
-                    </div>
-
-
+            <div class="card card-block d-flex"
+                 style="width:75%;  margin: 0 auto; float: none; margin-bottom: 30px;">
+                <div class="card-header align-items-center d-flex justify-content-center bg-dark text-white">
+                    <input type="hidden" name="meetingId" value="{{purposeDetail.id}}">Meeting ID :
+                    {{created_event.id}}</input>
                 </div>
+                <h6 class="card-title align-items-center d-flex justify-content-center"
+                    style="margin:10px; margin-top: 15px">Attending : {{created_event.purposeitem.vip}}</h6>
+                <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px">
+                    Representative: {{created_event.purposeitem.representative.title}}
+                    {{created_event.purposeitem.representative.name}}</h6>
+                <h6 class="card-title align-items-center d-flex justify-content-center"
+                    style="margin:10px; margin-bottom: 15px"> Meeting Venue: Aliy Property Advisors Building </h6>
+                <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px">Main Purpose
+                    : {{created_event.purposeitem.main_purpose}}</h6>
+                <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px">Sub Purpose
+                    : {{created_event.purposeitem.sub_purpose}}</h6>
+                <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px"> Date:
+                    {{created_event.day}} </h6>
+                <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px"> Time:
+                    {{created_event.start_time}} - {{created_event.end_time}}</h6>
+
+
+                <div class="form-group shadow-textarea"
+                     style="width: 75%; margin: 0 auto; margin-top: 30px; margin-bottom: 10px;  text-align: center;">
+                    <label style="text-align:center;" for="exampleFormControlTextarea6">Describe about your meeting
+                        detail (IMPORTANT)</label>
+                    <textarea class="form-control z-depth-1" id="exampleFormControlTextarea6" rows="3"
+                              placeholder="This meeting about..."></textarea>
+                </div>
+
+                <div class="card-footer text-center">
+                    <a href="{% url 'cancel-slot' created_event.id %}" class="btn btn-outline-danger btn-sm center"
+                       name="Cancel">
+                        Cancel
+                    </a>
+                    <button type="submit" class="btn btn-primary btn-sm center"
+                       style="color:white" name="submit" data-toggle="modal" data-target="#exampleModal">Confirm</button>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                     aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Do you want to check your latest slot?
+                            </div>
+                            <div class="modal-footer">
+                                <a href="{% url 'premiers-home' %}" type="button" class="btn btn-outline-danger ">No, I don't want</a>
+                                <a href="{% url 'premiers-status'%}" type="button" class="btn btn-primary">Yes, I want</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
 
         </div>
     </div>

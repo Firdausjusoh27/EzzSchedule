@@ -5,24 +5,37 @@
         <div class="container" style="margin: 30px">
             <h5 class="text-center"> List of slot that you booked </h5>
             <hr>
-
             {% for slot in slots %}
             <div class="card card-block d-flex shadow-sm"
                  style="width:75%;  margin: 0 auto; float: none; margin-bottom: 50px; margin-top: 30px">
-                <div class="card-header align-items-center d-flex justify-content-center bg-danger text-white" >
+                <div class="card-header align-items-center d-flex justify-content-center bg-dark text-white">
                     <input type="hidden" name="vipId" value="{{vip.id}}">Meeting ID : {{slot.id}}</input>
                 </div>
                 <h6 class="card-title align-items-center d-flex justify-content-center"
                     style="margin:10px; margin-top: 15px">Meeting Date: {{slot.day}}</h6>
 
-                <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px">Meeting Time: {{slot.start_time}} - {{slot.end_time}}</h6>
-                <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px">Main Objective: {{slot.purposeitem.main_purpose}}</h6>
-                <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px">Sub Objective: {{slot.purposeitem.sub_purpose}}</h6>
-                <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px">Venue: Aliy Property Office</h6>
-
+                <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px">Meeting
+                    Time: {{slot.start_time}} - {{slot.end_time}}</h6>
+                <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px">Main
+                    Objective: {{slot.purposeitem.main_purpose}}</h6>
+                <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px">Sub
+                    Objective: {{slot.purposeitem.sub_purpose}}</h6>
+                <h6 class="card-title align-items-center d-flex justify-content-center" style="margin:10px">Venue: Aliy
+                    Property Office</h6>
             </div>
             <br>
             {% endfor %}
+
+            <div style="margin-left: 38%">
+                <nav aria-label="...">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="btn btn-secondary" href="{% url 'premiers-home' %}">Back to Home Page</a>
+                        </li>
+                    </ul>
+                </nav>
+
+            </div>
         </div>
     </div>
 

@@ -1,20 +1,17 @@
 {% extends "premiers/base.html" %}
 {% block content %}
 
+<h2 class="text-center">Xera Scheduling </h2>
+<hr>
+<div class="card card-block d-flex shadow-sm"
+     style="width:50%; height:150px;  margin: 0 auto; float: none; margin-top: 40px; text-align: center;">
 
-<div class="event-container">
-    <div class="event">
-        <div class="container">
-            <form action="{% url 'cancel-slot' slot.id %}" method="POST">
-                {% csrf_token %}
-                <h2 class="text-center">Xera Scheduling </h2>
-                <hr>
-                    <p> Are you sure you want to cancel Meeting ID : {{slot.id}}</p>
-                    <input type="submit" name="Confirm">
-            </form>
-        </div>
-    </div>
-
+    <form action="{% url 'cancel-slot' slot.id %}" method="POST" style="margin-top:30px">
+        {% csrf_token %}
+        <h5> Do you sure you want to cancel your slot({{slot.id}}) ?</h5>
+        <input class="btn btn-primary" type="submit" name="Confirm" style="margin-top:10px"
+               value="Yes, cancel the slot">
+    </form>
 </div>
 
 {% endblock content %}

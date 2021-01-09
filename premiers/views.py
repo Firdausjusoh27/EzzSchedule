@@ -43,11 +43,16 @@ def event(request):
 def status(request):
     logged_in_user = request.user
     logged_in_user_slots = Event.objects.filter(user=logged_in_user)
+    print("------------------------------->", logged_in_user_slots)
 
-    context = {
-        'slots': logged_in_user_slots,
-    }
-    return render(request, 'premiers/status.html', context)
+    if logged_in_user_slots.exists():
+        context = {
+            'slots': logged_in_user_slots,
+        }
+        return render(request, 'premiers/status.html', context)
+
+    else:
+        return render(request, 'premiers/nostatus.html')
 
 
 def vip(request):

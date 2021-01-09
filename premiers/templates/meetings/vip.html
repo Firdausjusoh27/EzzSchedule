@@ -11,7 +11,7 @@
             <hr>
             <div class="card card-block d-flex shadow-sm"
                  style="width:75%;  margin: 0 auto; float: none; margin-bottom: 50px; margin-top: 30px">
-                <div class="card-header align-items-center d-flex justify-content-center bg-danger text-white">
+                <div class="card-header align-items-center d-flex justify-content-center bg-dark text-white">
                     <input type="hidden" name="vipId" value="{{vip.id}}">ATTENDING ID :
                     {{vip.id}}</input>
                 </div>
@@ -27,8 +27,8 @@
                     Email: {{vip.email}}</h6>
 
                 <div class="card-footer text-center">
-                    <a style="width:100px" href="{% url 'premiers-vip' vip.id %}" class="btn btn-secondary">Update</a>
-                    <a style="width:100px" href="{% url 'ezz-purpose' %}" class="btn btn-danger">Next</a>
+                    <a style="width:100px" href="{% url 'premiers-vip' vip.id %}" class="btn btn-outline-primary">Update</a>
+                    <a style="width:100px" href="{% url 'ezz-purpose' %}" class="btn btn-primary">Next</a>
                 </div>
 
 
@@ -44,11 +44,11 @@
             </form>
             {% endif %}
 
-            <div style="margin-left: 44%">
+            <div style="margin-left: 39.5%">
                 <nav aria-label="...">
                     <ul class="pagination">
                         <li class="page-item">
-                            <a class="btn btn-outline-secondary" href="{% url 'premiers-home' %}">Previous</a>
+                            <a class="btn btn-secondary" href="{% url 'premiers-home' %}">Back to Home Page</a>
                         </li>
                     </ul>
                 </nav>

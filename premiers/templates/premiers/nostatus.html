@@ -1,0 +1,26 @@
+{% extends "premiers/base.html" %}
+{% block content %}
+<div class="event-container">
+    <div class="event">
+        <div class="container" style="margin: 30px">
+            <h5 class="text-center"> List of slot that you booked </h5>
+            <hr>
+            <div class="card card-block d-flex shadow-sm"
+                 style="width:75%; height:150px;  margin: 0 auto; float: none; margin-top: 40px; text-align: center;">
+                    <h3 style="margin-top:10%"> You don't have any slot right now.</h3>
+            </div>
+            <div style="margin-left: 38%; margin-top: 20px">
+                <nav aria-label="...">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="btn btn-secondary" href="{% url 'premiers-home' %}">Back to Home Page</a>
+                        </li>
+                    </ul>
+                </nav>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

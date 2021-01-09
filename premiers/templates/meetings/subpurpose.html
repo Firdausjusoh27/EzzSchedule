@@ -9,18 +9,15 @@
                 {% for sub in subs %}
                 <div class="col-md-4">
                     <div class="card mb-4 shadow-sm">
-                        <div class="card-header align-items-center d-flex justify-content-center bg-danger text-white">
+                        <div class="card-header align-items-center d-flex justify-content-center bg-dark text-white">
                             <input type="hidden">{{sub.sub_item}}</input>
                         </div>
                         <div style=" text-align: center; display: block; margin-top: 5px; margin-bottom: 5px">
                             <img src="{{sub.image.url}}" alt="" class="img-fluid" style="width: 150px; height:150px;">
                         </div>
-                        <!--                            <ls>{{sub.id}}</ls>-->
-                        <!--                        <ls>{{main.subpurpose_set.all}}</ls>-->
-
                         <div class="card-footer text-center">
                             <a style="width:75px" href="{% url 'ezz-recommend' sub.id %}"
-                               class="btn btn-danger">Select</a>
+                               class="btn btn-primary">Select</a>
                         </div>
                     </div>
                     <br>
@@ -29,11 +26,11 @@
 
 
             </div>
-            <div style="margin-left: 44%">
+            <div style="margin-left: 40%">
                 <nav aria-label="..." >
                     <ul class="pagination">
                         <li class="page-item">
-                            <a class="btn btn-outline-secondary" href="{% url 'ezz-purpose' %}">Previous</a>
+                            <a class="btn btn-secondary" href="{% url 'ezz-purpose' %}">Previous Page</a>
                         </li>
                     </ul>
                 </nav>
