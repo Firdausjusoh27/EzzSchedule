@@ -164,7 +164,7 @@ def weekday_list(time_range, base):
     weekdays = [5, 6]
     for dt in date_list:
         if dt.weekday() not in weekdays:  # to print only the weekdates
-            print(dt.strftime("%Y-%m-%d"))
+            # print(dt.strftime("%Y-%m-%d"))
             weekday.append(dt)
     return weekday
 
@@ -177,10 +177,26 @@ class recommend(TemplateView):
         # get id from request url
         sub_id = self.kwargs['pro_id']
         # filter product by id
+
         sub = SubPurpose.objects.get(id=sub_id)
         main = MainPurpose.objects.get(id=sub.main_purpose_id)
-        fuzzy_result = round(fuzzy(main.main_weight, sub.sub_weight))
-        print("Fuzzy Result ------------------->", fuzzy_result)
+
+        user = self.request.user.vip
+        vip_detail = Vip.objects.get(name=user)
+        title_value = vip_detail.title.title_weight
+        company_value = vip_detail.company_Type.company_weight
+        position_value = vip_detail.position.position_weight
+
+        main_value = main.main_weight
+        sub_value = sub.sub_weight
+
+        person_average = (float(title_value) + float(company_value) + float(position_value))/3
+        purpose_average = (float(main_value + sub_value))/2
+        print("Person Average------------>", person_average)
+        print("Purpose Average------>", purpose_average)
+
+        fuzzy_result = round(fuzzy(person_average, purpose_average))
+        print("Fuzzy Result -------------------> IMPORTANT:", fuzzy_result)
 
         purpose_detail = PurposeDetail(user=self.request.user, vip=self.request.user.vip, main_purpose=main,
                                        sub_purpose=sub, fuzzy_weight=fuzzy_result)
@@ -190,13 +206,13 @@ class recommend(TemplateView):
         print("NEW ID", newid)
 
         selected_slot = Slot.objects.all()
-        time_range = 10
+        time_range = 30
         base = datetime.date.today()
 
         # Glory Category find free day within 5 workings day & the special thing is Xera open special slot.
-        if fuzzy_result > 70:
+        if fuzzy_result > 75:
             category = "GLORY"
-            print(category)
+            print("---------------------> IMPORTANT: ", category)
             date_list = weekday_list(time_range, base)
             free_date = []
             selected_date = []
@@ -244,11 +260,12 @@ class recommend(TemplateView):
                 'purposeDetail': purposeDetail,
                 'selected_slot': selected_slot,
                 'all_slot': all_slot,
+                'fuzzy': fuzzy_result,
             }
             return context
 
         # Master Category just find free day within 14 workings day
-        elif 45 <= fuzzy_result <= 70:
+        elif 45 <= fuzzy_result <= 75:
             category = "MASTER"
             print(category)
             next_week = base
@@ -308,6 +325,7 @@ class recommend(TemplateView):
             'selected_date': selected_date,
             'purposeDetail': purposeDetail,
             'selected_slot': selected_slot,
+            'fuzzy': fuzzy_result,
         }
         return context
 
